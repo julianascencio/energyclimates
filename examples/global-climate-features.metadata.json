@@ -1,0 +1,20 @@
+{
+  "period": "1996\u20132022",
+  "metadata": {
+    "source": "CRU TS 4.10 + ERA5 / NCAR"
+  },
+  "feature_schema": "monthly-climate-v1",
+  "units": {
+    "ghi_annual_kwh_m2": "kWh/m\u00b2/year",
+    "temperature_mean_c": "\u00b0C",
+    "temperature_coldest_month_c": "\u00b0C",
+    "temperature_warmest_month_c": "\u00b0C",
+    "solar_weighted_temperature_c": "\u00b0C",
+    "weak_month_ratio": "fraction",
+    "ghi_daily_weakest_month": "kWh/m\u00b2/day",
+    "solar_seasonality_cv": "dimensionless",
+    "precipitation_annual_mm": "mm/year",
+    "relative_humidity_mean_pct": "%",
+    "wind_speed_mean_m_s": "m/s"
+  }
+}

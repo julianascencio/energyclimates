@@ -1,0 +1,35 @@
+{
+  "format": "csv",
+  "frequency": "climatology",
+  "period": "1996\u20132022",
+  "month_days": [
+    31.0,
+    28.25925925925926,
+    31.0,
+    30.0,
+    31.0,
+    30.0,
+    31.0,
+    31.0,
+    30.0,
+    31.0,
+    30.0,
+    31.0
+  ],
+  "coordinates": {
+    "id": "location_id",
+    "latitude": "latitude",
+    "longitude": "longitude",
+    "month": "month"
+  },
+  "variables": {
+    "temperature": {
+      "column": "temperature_c",
+      "unit": "C"
+    },
+    "ghi": {
+      "column": "ghi_kwh_m2",
+      "unit": "kWh/m2/month"
+    }
+  }
+}

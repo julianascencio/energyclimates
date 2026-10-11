@@ -1,0 +1,25 @@
+// Unit checks for native-grid sampling and overlay clipping; no browser runtime.
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync('atlas/app.js','utf8');
+const sample=vm.runInNewContext('('+source.match(/^function sample.*$/m)[0]+')');
+const layer={north:1,west:-180,resolution:.25,height:2,width:1440};
+const data=new Float32Array(2880).fill(NaN);data[0]=1;data[1439]=50;data[1440]=9;
+assert.equal(sample(layer,data,.875,-179.875).value,1);
+assert.equal(sample(layer,data,.875,179.875).value,50);
+assert.equal(sample(layer,data,.625,-179.875).value,9);
+assert.equal(sample(layer,data,-60,-179.875),null);
+assert.equal(sample(layer,data,.875,0),null);
+assert.equal(sample(layer,data,.875,180).value,1);
+const regional={north:2,west:10,resolution:1,height:2,width:2};
+assert.equal(sample(regional,new Float32Array([1,2,3,4]),1.5,14.5),null);
+assert.equal(sample(regional,new Float32Array([1,2,3,4]),1.5,10.5).value,1);
+const elems={'#compare-mode':{value:'swipe'},'#compare-opacity':{value:'50'}};
+const img=()=>({clientWidth:800,style:{},getBoundingClientRect:()=>({left:-100,width:1600})});
+const a=img(),b=img(),state={compareLayer:{id:'example'},overlay:{getElement:()=>a},compareOverlay:{getElement:()=>b}};
+const context={state,$:id=>elems[id],map:{getContainer:()=>({getBoundingClientRect:()=>({left:100,width:1000})})}};
+vm.runInNewContext(source.match(/^function clipComparison.*$/m)[0]+';clipComparison()',context);
+assert.equal(a.style.clipPath,'inset(0 450px 0 0)');
+assert.equal(b.style.clipPath,'inset(0 0 0 350px)');
+elems['#compare-mode'].value='blend';vm.runInNewContext('clipComparison()',context);
+assert.equal(a.style.clipPath,'');assert.equal(b.style.clipPath,'');
+console.log('Native-grid sampling, no-data, longitude wrapping, scaled swipe clipping and blend reset passed.');

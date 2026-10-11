@@ -1,0 +1,29 @@
+{
+  "dataset": "https://data.mendeley.com/datasets/z3byd8jyfn/1",
+  "sha256": "58eb8de3c3c7cb3c2b6dac205f5fd62cc10ebc966c581c585e366f6706cf0083",
+  "finding": "Published CSV labels conflict with its coordinates and meteorological values. Values are shown unchanged; do not use these labels to quantify climate change. See the data-quality report.",
+  "example": {
+    "row": 0,
+    "Latitude": -55.0,
+    "Longitude": -68.0,
+    "KGPV": "AK",
+    "KGPV_nb": 1,
+    "Yf": 901.356,
+    "H_ann": 945.969,
+    "H_eff": 1035.024,
+    "PR": 0.902,
+    "UCF": 0.104,
+    "Tamb_avg": 5.045,
+    "Tmod_avg": 11.258,
+    "Tmod_max": 28.282,
+    "Tilt": 42.167
+  },
+  "interpretation": "A class-label ordering mismatch is suspected. No labels have been repaired or inverted automatically.",
+  "consequence": "No baseline-to-update zone-transition statistic is published. Raw continuous PV values are retained as deposited, not independently validated.",
+  "coverage": {
+    "rows": 55418,
+    "latitude_min": -55.0,
+    "latitude_max": 70.0
+  },
+  "header_note": "The deposit describes Tamb_avg as module temperature, but variable name and paper indicate ambient temperature. Both Tmod_avg and Tmod_max exist separately."
+}

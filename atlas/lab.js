@@ -1,0 +1,29 @@
+import {parseCSV,monthlyFeatures,profile,predict} from './energy-core.mjs';
+const $=s=>document.querySelector(s),esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let parsed,results=[],rules,models={};
+const fields=[['id','Location name','location_id'],['latitude','Latitude','latitude'],['longitude','Longitude','longitude'],['month','Month (1–12)','month'],['temperature','Air temperature','temperature_c'],['ghi','Sunlight','ghi_kwh_m2']];
+async function json(url){const r=await fetch(url);if(!r.ok)throw Error('Could not load model resources. Try again.');return r.json()}
+function load(text,example=false){parsed=parseCSV(text);results=[];$('#lab-results').innerHTML='';$('#lab-export').hidden=true;$('#lab-mapping').hidden=false;$('#lab-fields').innerHTML=fields.map(([key,label,defaultName])=>`<label>${label}<select data-field="${key}">${['id','temperature','ghi'].includes(key)?'<option value="">Not supplied</option>':''}${parsed.header.map(h=>`<option value="${esc(h)}" ${h===defaultName?'selected':''}>${esc(h)}</option>`).join('')}</select></label>`).join('');for(const key of ['temperature','ghi']){if(!parsed.header.includes(fields.find(x=>x[0]===key)[2]))$(`[data-field="${key}"]`).value=''}$('#lab-february').value=example?String(28+7/27):'28';$('#lab-temp-unit').value='C';$('#lab-sun-unit').value='kWh/m2';$('#lab-status').textContent=`${parsed.rows.length.toLocaleString()} monthly rows loaded. Check the columns and units, then calculate.`}
+export function initLab(){
+  $('#lab-file').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>10_000_000)throw Error('Use Python for files larger than 10 MB');load(await f.text())}catch(e){parsed=null;$('#lab-mapping').hidden=true;$('#lab-results').innerHTML='';$('#lab-export').hidden=true;$('#lab-status').textContent=e.message}};
+  $('#lab-example').onclick=async()=>{try{const r=await fetch('/downloads/monthly-climate.csv');if(!r.ok)throw Error('Example unavailable');load(await r.text(),true)}catch(e){$('#lab-status').textContent=e.message}};
+  $('#lab-form').onsubmit=async e=>{
+    e.preventDefault();const button=$('#lab-run');button.disabled=true;$('#lab-status').textContent='Calculating…';results=[];$('#lab-results').innerHTML='';$('#lab-export').hidden=true;
+    try{
+      if(!parsed)throw Error('Choose a monthly CSV or load the example');
+      const coords=Object.fromEntries(fields.slice(0,4).map(([k])=>[k,$(`[data-field="${k}"]`).value]));
+      const temp=$('[data-field="temperature"]').value,sun=$('[data-field="ghi"]').value,variables={};
+      if(temp)variables.temperature={column:temp,unit:$('#lab-temp-unit').value};if(sun)variables.ghi={column:sun,unit:$('#lab-sun-unit').value};
+      const feb=Number($('#lab-february').value);if(!Number.isFinite(feb)||feb<28||feb>29)throw Error('February must be 28–29 days; use Python for other calendars');
+      const mapping={coordinates:coords,variables,month_days:[31,feb,31,30,31,30,31,31,30,31,30,31]};
+      const features=monthlyFeatures(parsed.rows,mapping),tech=$('#lab-technology').value,method=$('#lab-method').value;
+      if(!rules)rules=await json('/models/rules-v1.json');if(method==='ml'&&!models[tech])models[tech]=await json(`/models/${tech}.json`);
+      results=features.map(f=>({...f,technology:tech,method,...(method==='ml'?predict(f,models[tech]):profile(f,tech,rules))}));
+      const valid=results.filter(r=>r.zone_id>0).length;$('#lab-status').textContent=`${valid.toLocaleString()} of ${results.length.toLocaleString()} locations classified. ${method==='ml'?'ML describes similarity to the atlas training climates.':'Profiles use the experimental rules shown in Data & method.'}`;
+      const value=(n,unit)=>Number.isFinite(n)?`${n.toLocaleString(undefined,{maximumFractionDigits:1})}${unit}`:'Missing';
+      $('#lab-results').innerHTML=`<div class="results-table"><table><caption>Your ${method==='ml'?'ML groups':'climate profiles'} · experimental</caption><thead><tr><th>Location</th><th>Plain-language profile</th><th>${tech==='bess'?'Winter / summer':'Annual sun'}</th><th>${tech==='bess'?'Data coverage':'Seasonality'}</th></tr></thead><tbody>${results.slice(0,200).map(r=>`<tr><td><b>${esc(r.location_id)}</b><small>${r.latitude.toFixed(3)}°, ${r.longitude.toFixed(3)}°</small></td><td><strong>${esc(r.zone_name)}</strong><small>${esc(r.status)}${r.reason?': '+esc(r.reason):''}</small></td><td>${tech==='bess'?value(r.temperature_coldest_month_c,'°C')+' / '+value(r.temperature_warmest_month_c,'°C'):value(r.ghi_annual_kwh_m2,' kWh/m²/year')}</td><td>${tech==='bess'?`${r.temperature_months}/12 months`:value(r.weak_month_ratio*100,'% weak-month sun')}</td></tr>`).join('')}</tbody></table></div>${results.length>200?'<p>Showing the first 200 locations. The CSV contains every result.</p>':''}<p class="muted">${method==='ml'?'The exported assignment separation is a distance measure, not confidence or a probability. ':'Weak-month sun compares the weakest month’s daily sunlight with the annual daily average. '}These profiles do not estimate yield, battery size, life or revenue.</p>`;
+      $('#lab-export').hidden=false;
+    }catch(err){$('#lab-status').textContent=err.message}finally{button.disabled=false}
+  };
+  $('#lab-export').onclick=()=>{if(!results.length)return;const keys=[...new Set(results.flatMap(Object.keys))];const cell=v=>{let s=Number.isFinite(v)||typeof v==='string'?String(v):'';if(typeof v==='string'&&/^[=+@\-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};const text=[keys.map(cell).join(','),...results.map(r=>keys.map(k=>cell(r[k])).join(','))].join('\r\n');const url=URL.createObjectURL(new Blob([text],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='energy-climate-profiles.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+}

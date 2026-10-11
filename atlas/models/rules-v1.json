@@ -1,0 +1,26 @@
+{
+  "version": "energy-climate-0.1.0",
+  "status": "experimental",
+  "solar_thresholds_kwh_m2_year": [1130, 1560, 2070],
+  "solar_names": ["Low sun", "Moderate sun", "Sunny", "Very sunny"],
+  "pv_temperature_thresholds_c": [10, 25],
+  "pv_temperature_names": ["cool", "mild", "hot"],
+  "weak_month_ratio_thresholds": [0.35, 0.75],
+  "season_names": ["Strongly seasonal sun", "Seasonal sun", "Steady sun"],
+  "bess_cold_month_c": 5,
+  "bess_hot_month_c": 30,
+  "bess_names": ["Mild year-round", "Cold winters", "Hot summers", "Hot summers & cold winters"],
+  "notes": {
+    "solar": "KGPV's published irradiation thresholds are retained; equality belongs to the lower solar class.",
+    "pv": "PV temperature is monthly-GHI-weighted ambient temperature, not module or cell temperature. Below 10 C is cool; above 25 C is hot; equality is mild. Provisional screening thresholds.",
+    "season": "Weakest month's mean daily irradiation divided by annual mean daily irradiation. Below 0.35 is strongly seasonal; 0.35 to below 0.75 is seasonal; at least 0.75 is steady. Provisional thresholds.",
+    "bess": "Cold if the coldest monthly mean is below 5 C; hot if the warmest monthly mean exceeds 30 C. These are ambient climate screening thresholds, not battery operating limits or HVAC predictions.",
+    "hybrid": "Combines solar seasonality and ambient thermal regime. It does not calculate optimal storage duration, autonomy, revenue or battery life. Those require hourly PV, load, dispatch and technology data."
+  },
+  "references": [
+    "https://doi.org/10.1016/j.solener.2019.08.072",
+    "https://pvlib-python.readthedocs.io/en/stable/reference/generated/pvlib.temperature.faiman.html",
+    "https://github.com/NatLabRockies/BLAST-Lite",
+    "https://doi.org/10.1016/j.renene.2025.123685"
+  ]
+}

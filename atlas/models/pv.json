@@ -1,0 +1,292 @@
+{
+  "schema": "energy-climate-kmeans-v1",
+  "technology": "pv",
+  "model_version": "pv-a1249b050b5e",
+  "status": "experimental",
+  "features": [
+    "ghi_annual_kwh_m2",
+    "solar_weighted_temperature_c",
+    "weak_month_ratio"
+  ],
+  "mean": [
+    1699.566244241199,
+    16.69526234968453,
+    0.5232788864715248
+  ],
+  "scale": [
+    470.509737888454,
+    10.420700470262968,
+    0.29647534447077195
+  ],
+  "centres": [
+    [
+      -1.6434992518177396,
+      -1.8495665706012379,
+      -1.7178710702791034
+    ],
+    [
+      -1.4132123281526903,
+      -0.7237875328851987,
+      -1.3774139318984806
+    ],
+    [
+      -0.993804951142484,
+      -1.1800601330757503,
+      -0.9953042486511869
+    ],
+    [
+      -0.32847845526119984,
+      -0.4015359174005964,
+      -0.43100459422668214
+    ],
+    [
+      0.32805102873079767,
+      0.8284534037940694,
+      1.0265874957621506
+    ],
+    [
+      0.37314727241733975,
+      0.2850017029467796,
+      0.060415428682052776
+    ],
+    [
+      0.9407604638212395,
+      -1.3206960867542132,
+      0.40676783372565445
+    ],
+    [
+      1.206650678763546,
+      0.9089643783310067,
+      0.744827511421653
+    ]
+  ],
+  "names": [
+    "Low sun · cool · weak-month sun 2%",
+    "Low sun · cool · weak-month sun 11%",
+    "Moderate sun · cool",
+    "Moderate sun · mild",
+    "Sunny · hot",
+    "Sunny · mild",
+    "Very sunny · cool",
+    "Very sunny · hot"
+  ],
+  "cluster_feature_means": [
+    {
+      "latitude": 68.50865013779112,
+      "longitude": 4.3431851955333824,
+      "temperature_months": 12.000000000000002,
+      "ghi_months": 12.000000000000002,
+      "temperature_mean_c": -11.530516863450591,
+      "temperature_coldest_month_c": -29.253880345246397,
+      "temperature_warmest_month_c": 8.037340084296883,
+      "ghi_annual_kwh_m2": 929.5012421465568,
+      "solar_weighted_temperature_c": -2.693575030825775,
+      "weak_month_ratio": 0.01579970630215285,
+      "ghi_daily_weakest_month": 0.04390768707056674,
+      "solar_seasonality_cv": 0.8900612551965972
+    },
+    {
+      "latitude": 56.414087794524995,
+      "longitude": 18.834484716025592,
+      "temperature_months": 12.0,
+      "ghi_months": 12.0,
+      "temperature_mean_c": 2.239375690641025,
+      "temperature_coldest_month_c": -13.002674239620834,
+      "temperature_warmest_month_c": 17.25238463223913,
+      "ghi_annual_kwh_m2": 1021.474104017649,
+      "solar_weighted_temperature_c": 8.728950022779236,
+      "weak_month_ratio": 0.10583854333338716,
+      "ghi_daily_weakest_month": 0.3137546749445923,
+      "solar_seasonality_cv": 0.704501849425432
+    },
+    {
+      "latitude": 48.96717943158634,
+      "longitude": 8.53191302836442,
+      "temperature_months": 11.999999999999998,
+      "ghi_months": 11.999999999999998,
+      "temperature_mean_c": -0.5399598910376313,
+      "temperature_coldest_month_c": -18.720840898335727,
+      "temperature_warmest_month_c": 15.985326195357874,
+      "ghi_annual_kwh_m2": 1253.8611001873821,
+      "solar_weighted_temperature_c": 4.721822844168557,
+      "weak_month_ratio": 0.24284174203166145,
+      "ghi_daily_weakest_month": 0.8463877182405947,
+      "solar_seasonality_cv": 0.5367615696993464
+    },
+    {
+      "latitude": 35.02134939531702,
+      "longitude": 28.618814465050715,
+      "temperature_months": 12.0,
+      "ghi_months": 12.0,
+      "temperature_mean_c": 9.3491073077568,
+      "temperature_coldest_month_c": -4.3502585418440285,
+      "temperature_warmest_month_c": 22.226446444873865,
+      "ghi_annual_kwh_m2": 1541.8369329561015,
+      "solar_weighted_temperature_c": 12.738218075609785,
+      "weak_month_ratio": 0.3987028962100456,
+      "ghi_daily_weakest_month": 1.6859959569109373,
+      "solar_seasonality_cv": 0.4130126208228654
+    },
+    {
+      "latitude": 0.6169721125965427,
+      "longitude": 14.579941552427762,
+      "temperature_months": 11.999999999999998,
+      "ghi_months": 11.999999999999998,
+      "temperature_mean_c": 25.2157013088173,
+      "temperature_coldest_month_c": 22.83719340627912,
+      "temperature_warmest_month_c": 27.18229470532884,
+      "ghi_annual_kwh_m2": 1842.3715524618583,
+      "solar_weighted_temperature_c": 25.34572588786761,
+      "weak_month_ratio": 0.8268085442971908,
+      "ghi_daily_weakest_month": 4.17459962586353,
+      "solar_seasonality_cv": 0.11779013448708005
+    },
+    {
+      "latitude": 8.34154830998014,
+      "longitude": 19.551847535364722,
+      "temperature_months": 12.0,
+      "ghi_months": 12.0,
+      "temperature_mean_c": 17.813017909723946,
+      "temperature_coldest_month_c": 8.55057755400943,
+      "temperature_warmest_month_c": 26.589442403026002,
+      "ghi_annual_kwh_m2": 1880.885857324589,
+      "solar_weighted_temperature_c": 19.58895392632048,
+      "weak_month_ratio": 0.5380444651378252,
+      "ghi_daily_weakest_month": 2.767847800254992,
+      "solar_seasonality_cv": 0.3078777330638777
+    },
+    {
+      "latitude": 22.52422684945435,
+      "longitude": 42.493474459860664,
+      "temperature_months": 11.999999999999998,
+      "ghi_months": 11.999999999999998,
+      "temperature_mean_c": 1.492537183939304,
+      "temperature_coldest_month_c": -8.797835536832727,
+      "temperature_warmest_month_c": 10.850491596745561,
+      "ghi_annual_kwh_m2": 2135.7454805746484,
+      "solar_weighted_temperature_c": 2.8270506378192906,
+      "weak_month_ratio": 0.641092980267364,
+      "ghi_daily_weakest_month": 3.762523257036025,
+      "solar_seasonality_cv": 0.2341469891826264
+    },
+    {
+      "latitude": 8.468198164109019,
+      "longitude": 29.90139301939928,
+      "temperature_months": 12.000000000000002,
+      "ghi_months": 12.000000000000002,
+      "temperature_mean_c": 25.46643368123898,
+      "temperature_coldest_month_c": 18.530061727053944,
+      "temperature_warmest_month_c": 31.183712874715653,
+      "ghi_annual_kwh_m2": 2261.2826582341454,
+      "solar_weighted_temperature_c": 26.127462865549035,
+      "weak_month_ratio": 0.7471970044929979,
+      "ghi_daily_weakest_month": 4.627274225877163,
+      "solar_seasonality_cv": 0.15676614065450714
+    }
+  ],
+  "radius95": [
+    1.2864302725899939,
+    0.7321608110345168,
+    0.6862640561765545,
+    0.9623964216370663,
+    0.7818993468155189,
+    0.9050173020911235,
+    1.1801519732676558,
+    0.7067292459499938
+  ],
+  "feature_min": [
+    580.0158211886883,
+    -20.599956970565657,
+    0.0
+  ],
+  "feature_max": [
+    2721.902816772461,
+    31.757430592203598,
+    0.9712954758987424
+  ],
+  "seed": 42,
+  "clusters": 8,
+  "area_weighted": true,
+  "training_locations": 67420,
+  "training_sha256": "4b47745808857cf5731447c80961d211f98bb044ad38538219cad24f360f575e",
+  "period": "1996–2022",
+  "rules": {
+    "version": "energy-climate-0.1.0",
+    "status": "experimental",
+    "solar_thresholds_kwh_m2_year": [
+      1130,
+      1560,
+      2070
+    ],
+    "solar_names": [
+      "Low sun",
+      "Moderate sun",
+      "Sunny",
+      "Very sunny"
+    ],
+    "pv_temperature_thresholds_c": [
+      10,
+      25
+    ],
+    "pv_temperature_names": [
+      "cool",
+      "mild",
+      "hot"
+    ],
+    "weak_month_ratio_thresholds": [
+      0.35,
+      0.75
+    ],
+    "season_names": [
+      "Strongly seasonal sun",
+      "Seasonal sun",
+      "Steady sun"
+    ],
+    "bess_cold_month_c": 5,
+    "bess_hot_month_c": 30,
+    "bess_names": [
+      "Mild year-round",
+      "Cold winters",
+      "Hot summers",
+      "Hot summers & cold winters"
+    ],
+    "notes": {
+      "solar": "KGPV's published irradiation thresholds are retained; equality belongs to the lower solar class.",
+      "pv": "PV temperature is monthly-GHI-weighted ambient temperature, not module or cell temperature. Below 10 C is cool; above 25 C is hot; equality is mild. Provisional screening thresholds.",
+      "season": "Weakest month's mean daily irradiation divided by annual mean daily irradiation. Below 0.35 is strongly seasonal; 0.35 to below 0.75 is seasonal; at least 0.75 is steady. Provisional thresholds.",
+      "bess": "Cold if the coldest monthly mean is below 5 C; hot if the warmest monthly mean exceeds 30 C. These are ambient climate screening thresholds, not battery operating limits or HVAC predictions.",
+      "hybrid": "Combines solar seasonality and ambient thermal regime. It does not calculate optimal storage duration, autonomy, revenue or battery life. Those require hourly PV, load, dispatch and technology data."
+    },
+    "references": [
+      "https://doi.org/10.1016/j.solener.2019.08.072",
+      "https://pvlib-python.readthedocs.io/en/stable/reference/generated/pvlib.temperature.faiman.html",
+      "https://github.com/NatLabRockies/BLAST-Lite",
+      "https://doi.org/10.1016/j.renene.2025.123685"
+    ]
+  },
+  "diagnostics": {
+    "spatial_block_degrees": 10,
+    "training_locations": 56379,
+    "holdout_locations": 11041,
+    "training_blocks": 292,
+    "holdout_blocks": 74,
+    "overlapping_blocks": 0,
+    "holdout_mean_squared_feature_distance": 0.28429039728257655,
+    "holdout_silhouette_unweighted": 0.3440800627887036,
+    "silhouette_sample_size": 1500,
+    "initialization_stability_ari": [
+      0.8277721933715564,
+      0.8464070703271862
+    ],
+    "rows_excluded_missing_features": 0,
+    "interpretation": "Feature-space diagnostics only. No energy-yield, battery-life or economic superiority has been established."
+  },
+  "implementation": {
+    "python": "3.12.14",
+    "sklearn": "1.8.0",
+    "algorithm": "MiniBatchKMeans",
+    "n_init": 10,
+    "batch_size": 4096,
+    "threads": 1
+  }
+}

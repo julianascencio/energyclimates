@@ -1,0 +1,21 @@
+{
+  "format": "csv",
+  "frequency": "hourly",
+  "timezone": "UTC",
+  "coordinates": {
+    "time": "timestamp",
+    "latitude": "lat",
+    "longitude": "lon",
+    "id": "station"
+  },
+  "variables": {
+    "temperature": {
+      "column": "air_temperature",
+      "unit": "C"
+    },
+    "ghi": {
+      "column": "ghi",
+      "unit": "W/m2"
+    }
+  }
+}

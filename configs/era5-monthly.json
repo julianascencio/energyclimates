@@ -1,0 +1,20 @@
+{
+  "format": "netcdf",
+  "frequency": "monthly",
+  "coordinates": {
+    "time": "valid_time",
+    "latitude": "latitude",
+    "longitude": "longitude"
+  },
+  "variables": {
+    "temperature": {
+      "name": "t2m",
+      "unit": "K"
+    },
+    "ghi": {
+      "name": "ssrd",
+      "unit": "J/m2/day",
+      "clip_min": 0
+    }
+  }
+}

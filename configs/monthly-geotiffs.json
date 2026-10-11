@@ -1,0 +1,16 @@
+{
+  "format": "geotiff",
+  "frequency": "climatology",
+  "period": "REPLACE with the input climatology period",
+  "resampling": "nearest",
+  "variables": {
+    "temperature": {
+      "file": "temperature.tif",
+      "unit": "C"
+    },
+    "ghi": {
+      "file": "ghi.tif",
+      "unit": "kWh/m2/month"
+    }
+  }
+}

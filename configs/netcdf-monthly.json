@@ -1,0 +1,23 @@
+{
+  "format": "netcdf",
+  "frequency": "monthly",
+  "coordinates": {
+    "time": "time",
+    "latitude": "lat",
+    "longitude": "lon"
+  },
+  "variables": {
+    "temperature": {
+      "name": "temperature",
+      "unit": "C"
+    },
+    "ghi": {
+      "name": "ghi",
+      "unit": "kWh/m2"
+    },
+    "precipitation": {
+      "name": "precipitation",
+      "unit": "mm"
+    }
+  }
+}

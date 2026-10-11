@@ -1,0 +1,10 @@
+* text=auto
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.tif binary
+*.parquet binary
+*.png binary
+*.csv -text
+atlas/downloads/KGPV_PVmcSi_05x05.csv binary

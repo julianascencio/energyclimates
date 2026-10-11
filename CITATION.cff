@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite EnergyClimates and the original scientific method and datasets used in your analysis."
+title: EnergyClimates
+version: 0.1.0
+date-released: 2026-10-11
+authors:
+  - family-names: Ascencio-Vasquez
+    given-names: Julian
+repository-code: "https://github.com/julianascencio/energyclimates"
+url: "https://github.com/julianascencio/energyclimates"
+license: MIT
+abstract: "Open-source Python tools for energy climate classification, machine learning and mapping, including KGPV, published PVCZ layers and experimental PV, hybrid and battery climate profiles. Dataset licences are separate from the software licence."
+keywords:
+  - climate classification
+  - photovoltaic
+  - energy storage
+  - KGPV
+  - machine learning

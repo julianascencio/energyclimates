@@ -1,0 +1,19 @@
+EnergyClimates
+Copyright (c) 2026 Julian Ascencio and EnergyClimates contributors
+
+EnergyClimates originated from the KGPV Atlas calculation and mapping project.
+The original classification is described by Ascencio-Vasquez, Brecl and Topic
+(2019), doi:10.1016/j.solener.2019.08.072.
+
+The project's MIT license applies to original software and documentation.
+It does not relicense the climate datasets, trained-model assets, third-party
+libraries, published classifications or original research articles.
+See DATA_LICENSES.md and the retained upstream notices.
+
+Leaflet 1.9.4 is distributed under BSD-2-Clause. Its license is retained in
+atlas/vendor/leaflet-LICENSE.txt.
+Todd Karin's PVCZ product has its MIT notice retained in
+atlas/downloads/pvcz-LICENSE.txt.
+
+Experimental profiles and independent ML models are explicitly identified.
+They do not reproduce the published Delft or Purdue PVZones assignments.

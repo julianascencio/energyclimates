@@ -1,0 +1,221 @@
+{
+  "start": 1996,
+  "end": 2022,
+  "complete_months": 324,
+  "grid": "0.5 degree, EPSG:4326",
+  "climate_only": false,
+  "thresholds_kwh_m2": [
+    1130,
+    1560,
+    2070
+  ],
+  "method": "Ascencio-Vasquez et al. 2019, Figure A1 and Table 4",
+  "resampling": "exact sampling of continuous source fields at CRU 0.5 degree grid cell centres",
+  "temperature_normal": "equal weight per calendar month",
+  "precipitation_variable": "precip (not precip_infill)",
+  "minimum_data": "Every month in the selected period required per cell; no infilling",
+  "sources": {
+    "temperature": [
+      {
+        "file": "cru_ts4.10.1991.2000.tmp.dat.nc.gz",
+        "sha256": "0f2a1f83a00ea511155f95d35d2fc244d6afd2d85f373815c562c37b700159ea"
+      },
+      {
+        "file": "cru_ts4.10.2001.2010.tmp.dat.nc.gz",
+        "sha256": "8f9a98fbfee9dcd31e6407105754a80f6ee124a52148b9f7098c608856924a4a"
+      },
+      {
+        "file": "cru_ts4.10.2011.2020.tmp.dat.nc.gz",
+        "sha256": "079d5ccb26011da67416bdad8037e0461fb614b2785a1a2b7c8f944861e3909c"
+      },
+      {
+        "file": "cru_ts4.10.2021.2025.tmp.dat.nc.gz",
+        "sha256": "d7b3b0f4cc7f3890cc12d1e53a71a587ef0efc3cd3a207069210539ecd21f281"
+      }
+    ],
+    "precipitation": [
+      {
+        "file": "gpcc_precipitation_analysis_monthly_1996_2000_v2025_050.nc.gz",
+        "sha256": "464395882d259bebf13a6ef7232a402393ac0bdcc4c9184148d0a15e27f1397f"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2001_2005_v2025_050.nc.gz",
+        "sha256": "fca95d2b71dd1ea52e416171071a6611124c1326b69ed1f6bfb1de113152a7be"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2006_2010_v2025_050.nc.gz",
+        "sha256": "0db9dbd1bc84b1f1627d361090c6dc19cf024ab02ee93e7fd69ee86c4894d0c9"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2011_2015_v2025_050.nc.gz",
+        "sha256": "4c9a3c4b19548ae60d182b70cd58fa4834f774cf1ee8a7a357823ec733d71175"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2016_2020_v2025_050.nc.gz",
+        "sha256": "a73164ddf8a138e83a4d72449b0ae445e8af4bd5b3a1f86e6a7d7abe0e3479c8"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2021_2024_v2025_050.nc.gz",
+        "sha256": "59cb162ee8a3c83df6c78c77c5f0058a2453df2d083db23a43a439fabed5d77a"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_01_v2025_050.nc.gz",
+        "sha256": "912cfffe586b3574e282a1e9051fd1e62af0a80c0b9893f638af710e591ffbc0"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_02_v2025_050.nc.gz",
+        "sha256": "a539a242b0264746759390348f4284ac8ce44593414a41dfa1e8b96103eddfa6"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_03_v2025_050.nc.gz",
+        "sha256": "64d03942dd026037a3c936defa561df23d528291e8ae5f206c15193e84d26661"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_04_v2025_050.nc.gz",
+        "sha256": "8296cd8967709080058e78ed2b3a7f74deccb194012661df4e61aae3ea4e5bfd"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_05_v2025_050.nc.gz",
+        "sha256": "de09381c74edd505947fd5358e815866c484be422bd3c39f04d32921d04ea1a4"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_06_v2025_050.nc.gz",
+        "sha256": "9393650198273827dd6440f1dd4f0cb904b1a540952d73c06944f5f8d7aef696"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_07_v2025_050.nc.gz",
+        "sha256": "e2aae99fcbe5cd56436768cc6d42c8d527a3e3725a2b4fc940a9f9ddaab4ef02"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_08_v2025_050.nc.gz",
+        "sha256": "de2c853c364597a3758a0fb1ec10290b761eca76b40320e3e92b864fa1ee08b9"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_09_v2025_050.nc.gz",
+        "sha256": "eea65bdb1a2c9b27e19eea93af8922abecf76b806b2e7ff0a114c656f808eb43"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_10_v2025_050.nc.gz",
+        "sha256": "a26cdd2f3c722823f83a8c6aae84e401512eea4133c8699fcf0757569a31cfaf"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_11_v2025_050.nc.gz",
+        "sha256": "467666586b4f624c47bede7898e4092fc201c0423736be8ee105e4af3d538133"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_12_v2025_050.nc.gz",
+        "sha256": "0c914bcf4c482b8c984ccaeb0574e952de8e4bb7b119c225b129c2cb77c20981"
+      }
+    ],
+    "irradiation": [
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1996010100_1996120100.nc",
+        "sha256": "7bbcc103753202a7d93598a69a2da79bb6dcd960d0d18f9f093e98de05f1c6d7"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1997010100_1997120100.nc",
+        "sha256": "a42afcc77d61a3b3a3d7bfb0c971f2dbab768586d2f7f2d33715ae276eb8cc3b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1998010100_1998120100.nc",
+        "sha256": "bfeb558b934191a8aa38f544534460608ff6975fb2c145c6d394a4562ea36a36"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1999010100_1999120100.nc",
+        "sha256": "ff69b8c3ab8370b421ea4c65266d55a7679007808d69822734d8b3dd8bd51514"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2000010100_2000120100.nc",
+        "sha256": "55db1099272255d0a72586b87cfc50da02a590b15f0ae7c64c29c2b40c1872aa"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2001010100_2001120100.nc",
+        "sha256": "93da0b8b6dc3e0a740a69b4779aae07e811afd7ebdd0aa32b0d815568429029e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2002010100_2002120100.nc",
+        "sha256": "c52e3de07c890ee7ba25d65143579330e16aafeaded75111fc457f8a7b1b747c"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2003010100_2003120100.nc",
+        "sha256": "fd1e5f1d42604c3916cd78ec112f328f27f1874407115494c5ea1f6c035ee4be"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2004010100_2004120100.nc",
+        "sha256": "0bd6ed6b5cb3c9e75fe7859e7015e5c4981c999113225b7fba82e8989c92574b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2005010100_2005120100.nc",
+        "sha256": "da6b9c052ffee4117c23ace337ede3ba15f3a51ef802947be874de9ac6298875"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2006010100_2006120100.nc",
+        "sha256": "f30ab36276bcc04c6bd81925e433af6d82b1c965653810e00c35654df3dc0e38"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2007010100_2007120100.nc",
+        "sha256": "6bdb67d46ef4e9b498a7c4c537501053300ab8ddad88d950d0ef649df555f7d2"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2008010100_2008120100.nc",
+        "sha256": "1d73d9bce0d45dfa0fef2849d2b637765b56d1daa9b2d321461da1614dede6e0"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2009010100_2009120100.nc",
+        "sha256": "38b039fda1e006065b7eea9b1c21ab0f4394ec9a32ced6413386ef7a98970d83"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2010010100_2010120100.nc",
+        "sha256": "8838fd9dc1a47a254ca558a61e55004ecbdcd4d7dc1dc516c4b75c37054eeb0c"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2011010100_2011120100.nc",
+        "sha256": "d398a88b4db91fdf8b854d02c910f84d3ef4caca48c87a525d08508356b81d5e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2012010100_2012120100.nc",
+        "sha256": "878660479ed08e971d640a6fec694546fb9617b00bda38617fa1638bde4d5d46"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2013010100_2013120100.nc",
+        "sha256": "01a7007275441ccd1b47483fa41bd331685b7f59359198bd79013e8cd0022633"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2014010100_2014120100.nc",
+        "sha256": "bd0a1120ce276699cdda1cc65cc1f29b5a10ee8386f70a7a8ece4355f927dec6"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2015010100_2015120100.nc",
+        "sha256": "fa7212a83eeae4eb18182eded846b2e23480ab369e3a31d9b295c003bf24ea0b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2016010100_2016120100.nc",
+        "sha256": "aca162c39642895cfcf1f9bcd19d9fabd51fd06c5d718d89616f06734cf03e5a"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2017010100_2017120100.nc",
+        "sha256": "89ecc4b24d2cd718be1c441b580e87f47adf9204e4258f3c8b778260e506d66e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2018010100_2018120100.nc",
+        "sha256": "20b1b51c03c928335fd1b64b996e3940106fb58c1531750a25755486e589193e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2019010100_2019120100.nc",
+        "sha256": "740e762d722ecbf425b0a5ce183a14de2b2b71632158cc3e3e07d6f9bc0d6d91"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2020010100_2020120100.nc",
+        "sha256": "e7306cf84fe209bc1acfef107a69d79a5dce749cf8a84bbf9d8b54b2456c6b6d"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2021010100_2021120100.nc",
+        "sha256": "7a044d924f65fc8e62f8b04f902d873a40db64d9746416ea03d4a6a9755645e8"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2022010100_2022120100.nc",
+        "sha256": "2ff9d6a92f9084bce3c6c3312e6df15c76ba2e947855059db4f1406caa4d64db"
+      }
+    ]
+  }
+}

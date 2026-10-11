@@ -1,0 +1,53 @@
+{
+  "provider": "https://github.com/toddkarin/pvcz",
+  "commit": "aa89fab8d1d66f46f4ea8575e2452aa75a927535",
+  "product": "PVCZ-2019 v0.2",
+  "period": [
+    "2010-01-01T00:00:00",
+    "2018-12-31T21:00:00"
+  ],
+  "input_files": [
+    {
+      "file": "pvcz.csv",
+      "url": "https://raw.githubusercontent.com/toddkarin/pvcz/aa89fab8d1d66f46f4ea8575e2452aa75a927535/pvcz/PVCZ-2019_ver0p2_world_PV_climate_stressors_and_zones.csv",
+      "sha256": "14e7e06010620f8054b3ba7ee49256bc4d26c017c51da2d188d9753cff7d9801"
+    },
+    {
+      "file": "PVCZ-2019_GLDAS_NOAH025_3H_info.npz",
+      "url": "https://raw.githubusercontent.com/toddkarin/pvcz/aa89fab8d1d66f46f4ea8575e2452aa75a927535/pvcz/PVCZ-2019_GLDAS_NOAH025_3H_info.npz",
+      "sha256": "83d755ba712d0007f0004e674c1c4af0ecb6ced23b77149e6f32f2397c2d93b4"
+    },
+    {
+      "file": "pvcz-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/toddkarin/pvcz/aa89fab8d1d66f46f4ea8575e2452aa75a927535/LICENSE",
+      "sha256": "e9aa38aa880a2851e6ff970155883b1c173698379946725ba8134c1ce43fa66b"
+    }
+  ],
+  "rows": 230742,
+  "duplicate_rounded_csv_coordinates": 52975,
+  "grid_note": "CSV coordinates are rounded to 3 significant digits. All rows were checked against the rounded exact metadata coordinates before gridding via the original keepers mask. Never deduplicate or grid the rounded CSV coordinates.",
+  "encoding": "Categorical raster code = source numeric code + 1. Zero is reserved; no-data stored as NaN. CSV values retain published precision.",
+  "mask_note": "ASCE wind -5 is missing, 0 is special wind region. Continuous wind masks both; wind classes retain the special category.",
+  "omitted_fields": "Duplicate KG class fragments/ASCE aliases and specific_humidity_rms are omitted. The latter is smaller than the mean in the source and requires provider clarification. Additional activation energies can be included with --all-activation-energies.",
+  "palette": "Atlas-specific colours; not the original paper palette. Mercator previews use nearest neighbour; native rasters and point values stay at 0.25\u00b0.",
+  "layers": [
+    "pvcz-combined",
+    "pvcz-temperature-zone-rack",
+    "pvcz-temperature-zone-roof",
+    "pvcz-humidity-zone",
+    "pvcz-wind-zone",
+    "pvcz-koppen-geiger",
+    "pvcz-temperature-mean",
+    "pvcz-temperature-min",
+    "pvcz-temperature-max",
+    "pvcz-equivalent-rack",
+    "pvcz-equivalent-roof",
+    "pvcz-cycling-rack",
+    "pvcz-cycling-roof",
+    "pvcz-humidity",
+    "pvcz-ghi",
+    "pvcz-wind-rms",
+    "pvcz-wind-max",
+    "pvcz-wind-asce"
+  ]
+}

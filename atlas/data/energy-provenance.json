@@ -1,0 +1,281 @@
+{
+  "scheme_version": "energy-climate-0.1.0",
+  "status": "experimental",
+  "period": "1996\u20132022",
+  "cells": 67420,
+  "month_days": [
+    31.0,
+    28.25925925925926,
+    31.0,
+    30.0,
+    31.0,
+    30.0,
+    31.0,
+    31.0,
+    30.0,
+    31.0,
+    30.0,
+    31.0
+  ],
+  "features": [
+    "location_id",
+    "latitude",
+    "longitude",
+    "temperature_months",
+    "ghi_months",
+    "temperature_mean_c",
+    "temperature_coldest_month_c",
+    "temperature_warmest_month_c",
+    "ghi_annual_kwh_m2",
+    "solar_weighted_temperature_c",
+    "weak_month_ratio",
+    "ghi_daily_weakest_month",
+    "solar_seasonality_cv",
+    "precipitation_annual_mm",
+    "relative_humidity_mean_pct",
+    "wind_speed_mean_m_s"
+  ],
+  "sources": {
+    "temperature": [
+      {
+        "file": "cru_ts4.10.1991.2000.tmp.dat.nc.gz",
+        "sha256": "0f2a1f83a00ea511155f95d35d2fc244d6afd2d85f373815c562c37b700159ea"
+      },
+      {
+        "file": "cru_ts4.10.2001.2010.tmp.dat.nc.gz",
+        "sha256": "8f9a98fbfee9dcd31e6407105754a80f6ee124a52148b9f7098c608856924a4a"
+      },
+      {
+        "file": "cru_ts4.10.2011.2020.tmp.dat.nc.gz",
+        "sha256": "079d5ccb26011da67416bdad8037e0461fb614b2785a1a2b7c8f944861e3909c"
+      },
+      {
+        "file": "cru_ts4.10.2021.2025.tmp.dat.nc.gz",
+        "sha256": "d7b3b0f4cc7f3890cc12d1e53a71a587ef0efc3cd3a207069210539ecd21f281"
+      }
+    ],
+    "ghi": [
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1996010100_1996120100.nc",
+        "sha256": "7bbcc103753202a7d93598a69a2da79bb6dcd960d0d18f9f093e98de05f1c6d7"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1997010100_1997120100.nc",
+        "sha256": "a42afcc77d61a3b3a3d7bfb0c971f2dbab768586d2f7f2d33715ae276eb8cc3b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1998010100_1998120100.nc",
+        "sha256": "bfeb558b934191a8aa38f544534460608ff6975fb2c145c6d394a4562ea36a36"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.1999010100_1999120100.nc",
+        "sha256": "ff69b8c3ab8370b421ea4c65266d55a7679007808d69822734d8b3dd8bd51514"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2000010100_2000120100.nc",
+        "sha256": "55db1099272255d0a72586b87cfc50da02a590b15f0ae7c64c29c2b40c1872aa"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2001010100_2001120100.nc",
+        "sha256": "93da0b8b6dc3e0a740a69b4779aae07e811afd7ebdd0aa32b0d815568429029e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2002010100_2002120100.nc",
+        "sha256": "c52e3de07c890ee7ba25d65143579330e16aafeaded75111fc457f8a7b1b747c"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2003010100_2003120100.nc",
+        "sha256": "fd1e5f1d42604c3916cd78ec112f328f27f1874407115494c5ea1f6c035ee4be"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2004010100_2004120100.nc",
+        "sha256": "0bd6ed6b5cb3c9e75fe7859e7015e5c4981c999113225b7fba82e8989c92574b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2005010100_2005120100.nc",
+        "sha256": "da6b9c052ffee4117c23ace337ede3ba15f3a51ef802947be874de9ac6298875"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2006010100_2006120100.nc",
+        "sha256": "f30ab36276bcc04c6bd81925e433af6d82b1c965653810e00c35654df3dc0e38"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2007010100_2007120100.nc",
+        "sha256": "6bdb67d46ef4e9b498a7c4c537501053300ab8ddad88d950d0ef649df555f7d2"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2008010100_2008120100.nc",
+        "sha256": "1d73d9bce0d45dfa0fef2849d2b637765b56d1daa9b2d321461da1614dede6e0"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2009010100_2009120100.nc",
+        "sha256": "38b039fda1e006065b7eea9b1c21ab0f4394ec9a32ced6413386ef7a98970d83"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2010010100_2010120100.nc",
+        "sha256": "8838fd9dc1a47a254ca558a61e55004ecbdcd4d7dc1dc516c4b75c37054eeb0c"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2011010100_2011120100.nc",
+        "sha256": "d398a88b4db91fdf8b854d02c910f84d3ef4caca48c87a525d08508356b81d5e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2012010100_2012120100.nc",
+        "sha256": "878660479ed08e971d640a6fec694546fb9617b00bda38617fa1638bde4d5d46"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2013010100_2013120100.nc",
+        "sha256": "01a7007275441ccd1b47483fa41bd331685b7f59359198bd79013e8cd0022633"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2014010100_2014120100.nc",
+        "sha256": "bd0a1120ce276699cdda1cc65cc1f29b5a10ee8386f70a7a8ece4355f927dec6"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2015010100_2015120100.nc",
+        "sha256": "fa7212a83eeae4eb18182eded846b2e23480ab369e3a31d9b295c003bf24ea0b"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2016010100_2016120100.nc",
+        "sha256": "aca162c39642895cfcf1f9bcd19d9fabd51fd06c5d718d89616f06734cf03e5a"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2017010100_2017120100.nc",
+        "sha256": "89ecc4b24d2cd718be1c441b580e87f47adf9204e4258f3c8b778260e506d66e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2018010100_2018120100.nc",
+        "sha256": "20b1b51c03c928335fd1b64b996e3940106fb58c1531750a25755486e589193e"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2019010100_2019120100.nc",
+        "sha256": "740e762d722ecbf425b0a5ce183a14de2b2b71632158cc3e3e07d6f9bc0d6d91"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2020010100_2020120100.nc",
+        "sha256": "e7306cf84fe209bc1acfef107a69d79a5dce749cf8a84bbf9d8b54b2456c6b6d"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2021010100_2021120100.nc",
+        "sha256": "7a044d924f65fc8e62f8b04f902d873a40db64d9746416ea03d4a6a9755645e8"
+      },
+      {
+        "file": "e5.moda.fc.sfc.accumu.128_169_ssrd.ll025sc.2022010100_2022120100.nc",
+        "sha256": "2ff9d6a92f9084bce3c6c3312e6df15c76ba2e947855059db4f1406caa4d64db"
+      }
+    ]
+  },
+  "rules": {
+    "version": "energy-climate-0.1.0",
+    "status": "experimental",
+    "solar_thresholds_kwh_m2_year": [
+      1130,
+      1560,
+      2070
+    ],
+    "solar_names": [
+      "Low sun",
+      "Moderate sun",
+      "Sunny",
+      "Very sunny"
+    ],
+    "pv_temperature_thresholds_c": [
+      10,
+      25
+    ],
+    "pv_temperature_names": [
+      "cool",
+      "mild",
+      "hot"
+    ],
+    "weak_month_ratio_thresholds": [
+      0.35,
+      0.75
+    ],
+    "season_names": [
+      "Strongly seasonal sun",
+      "Seasonal sun",
+      "Steady sun"
+    ],
+    "bess_cold_month_c": 5,
+    "bess_hot_month_c": 30,
+    "bess_names": [
+      "Mild year-round",
+      "Cold winters",
+      "Hot summers",
+      "Hot summers & cold winters"
+    ],
+    "notes": {
+      "solar": "KGPV's published irradiation thresholds are retained; equality belongs to the lower solar class.",
+      "pv": "PV temperature is monthly-GHI-weighted ambient temperature, not module or cell temperature. Below 10 C is cool; above 25 C is hot; equality is mild. Provisional screening thresholds.",
+      "season": "Weakest month's mean daily irradiation divided by annual mean daily irradiation. Below 0.35 is strongly seasonal; 0.35 to below 0.75 is seasonal; at least 0.75 is steady. Provisional thresholds.",
+      "bess": "Cold if the coldest monthly mean is below 5 C; hot if the warmest monthly mean exceeds 30 C. These are ambient climate screening thresholds, not battery operating limits or HVAC predictions.",
+      "hybrid": "Combines solar seasonality and ambient thermal regime. It does not calculate optimal storage duration, autonomy, revenue or battery life. Those require hourly PV, load, dispatch and technology data."
+    },
+    "references": [
+      "https://doi.org/10.1016/j.solener.2019.08.072",
+      "https://pvlib-python.readthedocs.io/en/stable/reference/generated/pvlib.temperature.faiman.html",
+      "https://github.com/NatLabRockies/BLAST-Lite",
+      "https://doi.org/10.1016/j.renene.2025.123685"
+    ]
+  },
+  "ml_diagnostics": {
+    "pv": {
+      "spatial_block_degrees": 10,
+      "training_locations": 56379,
+      "holdout_locations": 11041,
+      "training_blocks": 292,
+      "holdout_blocks": 74,
+      "overlapping_blocks": 0,
+      "holdout_mean_squared_feature_distance": 0.28429039728257655,
+      "holdout_silhouette_unweighted": 0.3440800627887036,
+      "silhouette_sample_size": 1500,
+      "initialization_stability_ari": [
+        0.8277721933715564,
+        0.8464070703271862
+      ],
+      "rows_excluded_missing_features": 0,
+      "interpretation": "Feature-space diagnostics only. No energy-yield, battery-life or economic superiority has been established."
+    },
+    "hybrid": {
+      "spatial_block_degrees": 10,
+      "training_locations": 56379,
+      "holdout_locations": 11041,
+      "training_blocks": 292,
+      "holdout_blocks": 74,
+      "overlapping_blocks": 0,
+      "holdout_mean_squared_feature_distance": 0.5058250376325497,
+      "holdout_silhouette_unweighted": 0.29999981900239026,
+      "silhouette_sample_size": 1500,
+      "initialization_stability_ari": [
+        0.789050130542011,
+        0.5753643598558404
+      ],
+      "rows_excluded_missing_features": 0,
+      "interpretation": "Feature-space diagnostics only. No energy-yield, battery-life or economic superiority has been established."
+    },
+    "bess": {
+      "spatial_block_degrees": 10,
+      "training_locations": 56379,
+      "holdout_locations": 11041,
+      "training_blocks": 292,
+      "holdout_blocks": 74,
+      "overlapping_blocks": 0,
+      "holdout_mean_squared_feature_distance": 0.36190433747763107,
+      "holdout_silhouette_unweighted": 0.4113691795119607,
+      "silhouette_sample_size": 1500,
+      "initialization_stability_ari": [
+        0.43984464946582247,
+        0.4509453346223187
+      ],
+      "rows_excluded_missing_features": 0,
+      "interpretation": "Feature-space diagnostics only. No energy-yield, battery-life or economic superiority has been established."
+    }
+  },
+  "limits": [
+    "Monthly mean climate only; no extreme-temperature or subdaily-variability claims",
+    "27-year common period, not a 30-year WMO normal",
+    "BESS climate profiles exclude chemistry, enclosure, dispatch, tariffs and grid constraints",
+    "No independent operational target was used to validate performance superiority"
+  ]
+}

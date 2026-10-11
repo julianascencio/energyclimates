@@ -1,0 +1,111 @@
+{
+  "start": 1996,
+  "end": 2025,
+  "complete_months": 360,
+  "grid": "0.5 degree, EPSG:4326",
+  "climate_only": true,
+  "thresholds_kwh_m2": [
+    1130,
+    1560,
+    2070
+  ],
+  "method": "Ascencio-Vasquez et al. 2019, Figure A1 and Table 4",
+  "resampling": "exact sampling of continuous source fields at CRU 0.5 degree grid cell centres",
+  "temperature_normal": "equal weight per calendar month",
+  "precipitation_variable": "precip (not precip_infill)",
+  "minimum_data": "Every month in the selected period required per cell; no infilling",
+  "sources": {
+    "temperature": [
+      {
+        "file": "cru_ts4.10.1991.2000.tmp.dat.nc.gz",
+        "sha256": "0f2a1f83a00ea511155f95d35d2fc244d6afd2d85f373815c562c37b700159ea"
+      },
+      {
+        "file": "cru_ts4.10.2001.2010.tmp.dat.nc.gz",
+        "sha256": "8f9a98fbfee9dcd31e6407105754a80f6ee124a52148b9f7098c608856924a4a"
+      },
+      {
+        "file": "cru_ts4.10.2011.2020.tmp.dat.nc.gz",
+        "sha256": "079d5ccb26011da67416bdad8037e0461fb614b2785a1a2b7c8f944861e3909c"
+      },
+      {
+        "file": "cru_ts4.10.2021.2025.tmp.dat.nc.gz",
+        "sha256": "d7b3b0f4cc7f3890cc12d1e53a71a587ef0efc3cd3a207069210539ecd21f281"
+      }
+    ],
+    "precipitation": [
+      {
+        "file": "gpcc_precipitation_analysis_monthly_1996_2000_v2025_050.nc.gz",
+        "sha256": "464395882d259bebf13a6ef7232a402393ac0bdcc4c9184148d0a15e27f1397f"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2001_2005_v2025_050.nc.gz",
+        "sha256": "fca95d2b71dd1ea52e416171071a6611124c1326b69ed1f6bfb1de113152a7be"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2006_2010_v2025_050.nc.gz",
+        "sha256": "0db9dbd1bc84b1f1627d361090c6dc19cf024ab02ee93e7fd69ee86c4894d0c9"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2011_2015_v2025_050.nc.gz",
+        "sha256": "4c9a3c4b19548ae60d182b70cd58fa4834f774cf1ee8a7a357823ec733d71175"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2016_2020_v2025_050.nc.gz",
+        "sha256": "a73164ddf8a138e83a4d72449b0ae445e8af4bd5b3a1f86e6a7d7abe0e3479c8"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2021_2024_v2025_050.nc.gz",
+        "sha256": "59cb162ee8a3c83df6c78c77c5f0058a2453df2d083db23a43a439fabed5d77a"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_01_v2025_050.nc.gz",
+        "sha256": "912cfffe586b3574e282a1e9051fd1e62af0a80c0b9893f638af710e591ffbc0"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_02_v2025_050.nc.gz",
+        "sha256": "a539a242b0264746759390348f4284ac8ce44593414a41dfa1e8b96103eddfa6"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_03_v2025_050.nc.gz",
+        "sha256": "64d03942dd026037a3c936defa561df23d528291e8ae5f206c15193e84d26661"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_04_v2025_050.nc.gz",
+        "sha256": "8296cd8967709080058e78ed2b3a7f74deccb194012661df4e61aae3ea4e5bfd"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_05_v2025_050.nc.gz",
+        "sha256": "de09381c74edd505947fd5358e815866c484be422bd3c39f04d32921d04ea1a4"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_06_v2025_050.nc.gz",
+        "sha256": "9393650198273827dd6440f1dd4f0cb904b1a540952d73c06944f5f8d7aef696"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_07_v2025_050.nc.gz",
+        "sha256": "e2aae99fcbe5cd56436768cc6d42c8d527a3e3725a2b4fc940a9f9ddaab4ef02"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_08_v2025_050.nc.gz",
+        "sha256": "de2c853c364597a3758a0fb1ec10290b761eca76b40320e3e92b864fa1ee08b9"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_09_v2025_050.nc.gz",
+        "sha256": "eea65bdb1a2c9b27e19eea93af8922abecf76b806b2e7ff0a114c656f808eb43"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_10_v2025_050.nc.gz",
+        "sha256": "a26cdd2f3c722823f83a8c6aae84e401512eea4133c8699fcf0757569a31cfaf"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_11_v2025_050.nc.gz",
+        "sha256": "467666586b4f624c47bede7898e4092fc201c0423736be8ee105e4af3d538133"
+      },
+      {
+        "file": "gpcc_precipitation_analysis_monthly_2025_12_v2025_050.nc.gz",
+        "sha256": "0c914bcf4c482b8c984ccaeb0574e952de8e4bb7b119c225b129c2cb77c20981"
+      }
+    ]
+  }
+}

@@ -19,3 +19,9 @@ predictions/
 atlas/data/*.bin
 atlas/data/*.png
 atlas/downloads/*.zip
+
+docs/_build/
+docs/auto_examples/
+docs/sg_execution_times.rst
+examples/gallery/*.ipynb
+artifacts/

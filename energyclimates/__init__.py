@@ -12,7 +12,7 @@ from kgpv.engine import (
     load_rules,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "ClimateCube", "classify_features", "classify_kgpv", "extract_features",
     "load_dataset", "load_rules",

@@ -120,3 +120,26 @@ independent atlas ML models.
 The source datasets, periods and experimental scientific status are unchanged.
 This packaging check did not repeat raw-provider downloads or browser interaction
 tests, and it is not independent validation of energy-system performance.
+
+## Package and documentation redesign · 2 November 2026
+
+The 0.2.0 redesign preserves the existing scientific engine and adds explicit
+input, method and analysis namespaces. Verification in Python 3.12 included:
+
+- 24 passing Python tests, including the original scientific suite, compatibility
+  imports, missing-data propagation, source hashes and regular-grid exports.
+- Existing Node map/math checks plus catalogue URL resolution at both the domain
+  root and a GitHub Pages project subpath; JavaScript syntax checks passed.
+- Wheel and source distribution built with `python -m build`; Twine metadata checks
+  passed. The wheel was installed into a temporary target and exercised outside
+  the checkout, including packaged rules, public APIs and all three command aliases.
+- All six gallery examples executed without provider requests. The Sphinx/PyData
+  documentation build completed with warnings treated as errors.
+- All 49 atlas browser layers rebuilt from native rasters. Generated local links,
+  referenced atlas files and binary-grid dimensions were checked.
+
+These checks do not refresh source climatologies or independently validate the
+experimental profiles. Browser interaction and visual layout were not checked in
+a browser in this environment. Python 3.11/3.13 and hosted deployment are checked
+separately by the configured GitHub Actions jobs; local checks do not establish
+that Pages or PyPI are already published.

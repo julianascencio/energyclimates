@@ -1,8 +1,7 @@
 cff-version: 1.2.0
 message: "Please cite EnergyClimates and the original scientific method and datasets used in your analysis."
 title: EnergyClimates
-version: 0.1.0
-date-released: 2026-10-11
+version: 0.2.0
 authors:
   - family-names: Ascencio-Vasquez
     given-names: Julian

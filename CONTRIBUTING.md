@@ -25,8 +25,11 @@ measures climate grouping and which actually measures energy-system value.
 ```bash
 python -m venv .venv
 # Activate the environment using your platform's standard command.
-python -m pip install -e '.[dev]'
-python -m unittest discover -s tests -v
+python -m pip install -e '.[dev,docs]'
+python -m pytest
+python -m build
+python scripts/check_distribution.py dist
+python scripts/build_docs.py
 node tests/test_map_math.cjs
 ```
 
@@ -42,3 +45,15 @@ unless a deprecation and migration path is documented.
 By submitting code, you agree that your original contribution can be distributed
 under the project's MIT licence. Dataset contributions must retain their actual
 upstream terms; they are not automatically relicensed as MIT.
+
+## Public layers and documentation
+
+Place input contracts/adapters under `energyclimates.inputs`, reusable scientific
+APIs under `energyclimates.methods`, and study orchestration under
+`energyclimates.analysis`. Reuse the existing engine; do not create a second
+implementation of a published method. Preserve existing imports and CLI aliases.
+
+Add runnable gallery examples under `examples/gallery/`, labelling synthetic data
+and source periods explicitly. Documentation uses Sphinx/PyData, matching OrbitalPV
+and Energy Data Insights. Build with warnings treated as errors. See
+[release guidance](https://julianascencio.github.io/energyclimates/releasing.html) for Pages and PyPI setup.

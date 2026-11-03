@@ -7,6 +7,7 @@ User guide
    inputs
    methods
    analysis
+   map-examples
    atlas
    ENGINE_GUIDE
    ATLAS_REFERENCE

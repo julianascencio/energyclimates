@@ -90,6 +90,21 @@ def vegetation_screen(frame, *, days=DAYS):
     return result
 
 
+def population_screen(frame):
+    """Return supplied people/km² and log10(1+density), preserving nodata.
+
+    Do not multiply this land-area density by full geographic cell area to
+    invent population counts. The source includes fractional land/coastal cells.
+    """
+    result = _base(frame)
+    density = frame["population_density_km2"].to_numpy(dtype=float)
+    if (density[np.isfinite(density)] < 0).any() or np.isinf(density).any():
+        raise ValueError("Population density must be nonnegative or missing")
+    result["population_density_km2"] = density
+    result["log10_population_density_plus_one"] = np.log10(1 + density)
+    return result
+
+
 def storm_report_grid(
     frame, *, event_types, start_year, end_year, resolution=1.0, minimum_hail_mm=None
 ):

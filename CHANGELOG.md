@@ -7,6 +7,7 @@
 - Add an offline thunderstorm map with source provenance, methods and analysis exports.
 - Add an offline hail map with source provenance, methods and analysis exports.
 - Add an offline vegetation map with source provenance, methods and analysis exports.
+- Add an offline population map with source provenance, methods and analysis exports.
 
 ## 0.2.0 — unreleased
 

@@ -13,6 +13,7 @@ environment-snow
 environment-thunderstorm
 environment-hail
 environment-vegetation
+environment-population
 ```
 
 | Layer and runnable example | Input | Method and analysis output |
@@ -22,6 +23,7 @@ environment-vegetation
 | {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | NOAA NCEI U.S. Thunderstorm Wind and Lightning reports, 2020–2024 | Distinct local report dates/year in 1° bins; separate wind and lightning maps |
 | {doc}`Hail <auto_examples/plot_16_map_hail>` | NOAA NCEI U.S. hail reports and diameters, 2020–2024 | Report days/year for hail ≥25.4 mm and largest reported diameter per 1° bin |
 | {doc}`Vegetation <auto_examples/plot_17_map_vegetation>` | NASA MERRA-2 GMI model monthly leaf-area index, 2019 | Day-weighted mean LAI and seasonal range, m² leaf/m² ground |
+| {doc}`Population <auto_examples/plot_18_map_population>` | CIESIN / NASA SEDAC GPWv4.11 2020 density via Stanford's mirror | 0.5° arithmetic density preview and log10(1+density), preserving real zeros |
 
 ## Input contracts
 
@@ -36,6 +38,7 @@ WGS84 degrees. Monthly arrays contain January through December in that order.
 | Snow | `swe_mm_months` | Twelve monthly-mean ground SWE values, mm water equivalent |
 | Vegetation | `lai_months` | Twelve monthly-mean LAI values, m² leaf/m² ground |
 | Storms / hail | `event_id`, `event_type`, `date`, `hail_diameter_mm` | Unique report IDs, local calendar dates, hail diameter in mm; size missing for wind/lightning |
+| Population | `population_density_km2` | People/km²; missing is distinct from zero |
 
 For your own normalized table, pass a DataFrame directly to `run_environment`.
 Attach source, period and unit declarations to `frame.attrs`. Invalid coordinates,

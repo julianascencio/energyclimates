@@ -10,6 +10,7 @@ import pytest
 from energyclimates.analysis.environment import run_environment
 from energyclimates.inputs.environment import read_environment
 from energyclimates.methods.environment import (
+    snow_screen,
     soiling_screen,
 )
 
@@ -29,10 +30,18 @@ def test_soiling_dimensions_and_tilt():
         soiling_screen(frame, tilt_degrees=-1)
 
 
+def test_snow_threshold_months_are_not_snow_days():
+    result = snow_screen(monthly("swe_mm_months", [0, 1, 2] + [0] * 9))
+    assert result.months_mean_swe_above_threshold.iloc[0] == 2
+    assert result.peak_month_swe_mm.iloc[0] == 2
+    assert result.mean_swe_mm.iloc[0] == pytest.approx((28 + 62) / 365)
+
+
 @pytest.mark.parametrize(
     "function,column,output",
     [
         (soiling_screen, "dust_ug_m3_months", "dry_deposition_g_m2_day"),
+        (snow_screen, "swe_mm_months", "months_mean_swe_above_threshold"),
     ],
 )
 def test_incomplete_monthly_series_do_not_become_valid_annual_indicators(function, column, output):

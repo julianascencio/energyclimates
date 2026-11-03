@@ -40,6 +40,11 @@ SHA-256 hashes, periods, units, processing and limitations.
   Attribute NASA GSFC ACDL/GMAO and the GMI project:
   https://acd-ext.gsfc.nasa.gov/Projects/GEOSCCM/MERRA2GMI/ . These are model outputs;
   do not describe GMI aerosols as assimilated aerosol observations.
+- **NOAA PSL NCEP/NCAR Reanalysis 1**: 1981–2010 monthly ground snow-water
+  climatology. Data provided by NOAA PSL, Boulder, Colorado, USA:
+  https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis.derived/surface_gauss/catalog.html .
+  Attribute NCEP/NCAR Reanalysis and NOAA PSL. U.S. government data are generally
+  public domain; source scientific attribution remains required practice.
 
 The numerical methods and snapshot-building code use the repository's MIT licence.
 No provider endorses these screening indicators.

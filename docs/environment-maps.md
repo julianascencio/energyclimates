@@ -9,11 +9,13 @@ engineering loads or PV-loss predictions.
 :maxdepth: 1
 
 environment-soiling
+environment-snow
 ```
 
 | Layer and runnable example | Input | Method and analysis output |
 | --- | --- | --- |
 | {doc}`Soiling <auto_examples/plot_13_map_soiling>` | NASA MERRA-2 GMI modeled monthly surface dust, 2019; sampled land cells | Day-weighted dust concentration and an explicit dry-deposition scenario, g/m²/day |
+| {doc}`Snow <auto_examples/plot_14_map_snow>` | NOAA NCEP/NCAR Reanalysis 1 ground snow-water equivalent, 1981–2010 | Months with monthly-mean SWE ≥1 mm, mean and peak monthly SWE |
 
 ## Input contracts
 
@@ -25,6 +27,7 @@ WGS84 degrees. Monthly arrays contain January through December in that order.
 | Study | Required additional input columns | Units / semantics |
 | --- | --- | --- |
 | Soiling | `dust_ug_m3_months` | Twelve monthly surface-dust means, µg/m³; not column AOD or total PM10 |
+| Snow | `swe_mm_months` | Twelve monthly-mean ground SWE values, mm water equivalent |
 
 For your own normalized table, pass a DataFrame directly to `run_environment`.
 Attach source, period and unit declarations to `frame.attrs`. Invalid coordinates,

@@ -143,3 +143,13 @@ experimental profiles. Browser interaction and visual layout were not checked in
 a browser in this environment. Python 3.11/3.13 and hosted deployment are checked
 separately by the configured GitHub Actions jobs; local checks do not establish
 that Pages or PyPI are already published.
+
+## Environmental map series · 3 November 2026
+
+Each map is delivered in its own pull request, with shared utilities introduced
+by the soiling map. Numerical tests cover physical units, missing-data behavior,
+snapshot checksums, exports and the available methods. Each branch is checked with
+the full Python suite, an executed warnings-as-errors documentation build and
+wheel/source-distribution validation. Exact results are recorded in its PR.
+These are software and contract checks, not independent validation of hazard
+accuracy or PV-loss performance. Existing atlas layers remain unchanged.

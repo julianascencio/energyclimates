@@ -34,3 +34,8 @@ made by `run_classification`.
 For ML studies, use `energyclimates.methods.ml` and the existing `train`, `predict`
 and `evaluate-target` commands. Inspect holdout diagnostics, missing-data counts,
 source periods and assumptions before interpreting any map as useful energy evidence.
+
+## Environmental analysis
+
+See the [environmental map workflows](environment-maps.md) for available studies,
+input contracts, units, scientific limits and offline runnable examples.

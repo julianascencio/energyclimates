@@ -16,3 +16,8 @@ Chile and European regional views, and global ML assignments. Original 0.5°
 cells and missing values are preserved; no map tiles or provider requests are used.
 See :doc:`/map-examples` for the executed PNG/SVG/CSV results archive and batch
 commands. These are climate screening maps, not energy-performance forecasts.
+
+**Environmental maps.**
+
+See :doc:`/environment-maps` for the available environmental studies, public-data
+snapshots, source periods, assumptions and downloadable numerical results.

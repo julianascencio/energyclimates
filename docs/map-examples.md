@@ -87,3 +87,8 @@ The bundled feature table and its metadata are produced by
 existing algorithms; they do not claim to regenerate raw climate inputs.
 See [references](references.md), [validation](validation.md) and the repository's
 [data licences](https://github.com/julianascencio/energyclimates/blob/main/DATA_LICENSES.md).
+
+## Environmental maps
+
+See the [environmental map workflows](environment-maps.md) for available studies,
+input contracts, units, scientific limits and offline runnable examples.

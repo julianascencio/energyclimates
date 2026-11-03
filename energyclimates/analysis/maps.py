@@ -141,3 +141,107 @@ def plot_category_map(frame, *, labels, colors, ax=None, column="zone_id", **kwa
             fontsize=9,
         )
     return image
+
+
+def plot_rectilinear_map(
+    frame,
+    column,
+    *,
+    latitude,
+    longitude,
+    ax=None,
+    bounds=(-180, 180, -60, 85),
+    title=None,
+    cmap="viridis",
+    norm=None,
+    vmin=None,
+    vmax=None,
+):
+    """Plot declared rectilinear centres, including a Gaussian latitude axis.
+
+    Coordinates must be unique, strictly increasing and within WGS84 limits.
+    Midpoint edges are inferred and clipped at the poles/dateline. Supply the
+    COMPLETE source axes, including missing rows/columns, to avoid stretching
+    across gaps. Sparse values stay missing; no interpolation is performed.
+    Sampled grids describe sampling footprints, not spatially averaged cells.
+    """
+    import matplotlib.pyplot as plt
+
+    from energyclimates.inputs.environment import validate_coordinates
+
+    validate_coordinates(frame)
+    lat = np.asarray(latitude, dtype=float)
+    lon = np.asarray(longitude, dtype=float)
+    for name, values, limit in [("latitude", lat, 90), ("longitude", lon, 180)]:
+        if (
+            values.ndim != 1
+            or len(values) < 2
+            or not np.isfinite(values).all()
+            or (np.diff(values) <= 0).any()
+            or (np.abs(values) > limit).any()
+        ):
+            raise ValueError(f"{name} must be a finite, increasing geographic axis")
+    if len(lat) * len(lon) > 10_000_000:
+        raise ValueError("Requested grid exceeds ten million cells")
+    if frame.duplicated(["latitude", "longitude"]).any():
+        raise ValueError("Duplicate geographic cells")
+    rows = np.searchsorted(lat, frame.latitude.to_numpy())
+    cols = np.searchsorted(lon, frame.longitude.to_numpy())
+    if (rows >= len(lat)).any() or (cols >= len(lon)).any():
+        raise ValueError("Coordinates are not on the supplied axes")
+    if not np.allclose(lat[rows], frame.latitude, atol=1e-7, rtol=0) or not np.allclose(
+        lon[cols], frame.longitude, atol=1e-7, rtol=0
+    ):
+        raise ValueError("Coordinates are not on the supplied axes")
+
+    def edges(values, limit):
+        return np.clip(
+            np.r_[
+                values[0] - (values[1] - values[0]) / 2,
+                (values[:-1] + values[1:]) / 2,
+                values[-1] + (values[-1] - values[-2]) / 2,
+            ],
+            -limit,
+            limit,
+        )
+
+    west, east, south, north = bounds
+    if not (-180 <= west < east <= 180 and -90 <= south < north <= 90):
+        raise ValueError("Invalid geographic bounds")
+    grid = np.full((len(lat), len(lon)), np.nan)
+    grid[rows, cols] = frame[column].to_numpy(dtype=float)
+    # A global axis centred on -180 needs its wrapped half-cell at +180 too.
+    spacing = np.diff(lon)
+    if (
+        np.allclose(spacing, spacing[0])
+        and np.isclose(lon[-1] - lon[0] + spacing[0], 360)
+        and np.isclose(lon[0], -180)
+    ):
+        lon = np.r_[lon, 180.0]
+        grid = np.column_stack([grid, grid[:, 0]])
+    if ax is None:
+        _, ax = plt.subplots(figsize=(11, 5), layout="constrained")
+    palette = plt.get_cmap(cmap).copy()
+    palette.set_bad("#e8eef2")
+    image = ax.pcolormesh(
+        edges(lon, 180),
+        edges(lat, 90),
+        np.ma.masked_invalid(grid),
+        cmap=palette,
+        norm=norm,
+        vmin=vmin,
+        vmax=vmax,
+        shading="flat",
+        rasterized=True,
+    )
+    ax.set(
+        xlim=(west, east),
+        ylim=(south, north),
+        xlabel="Longitude (°)",
+        ylabel="Latitude (°)",
+        title=title or column,
+        aspect="equal",
+        facecolor="#e8eef2",
+    )
+    ax.grid(color="#576879", alpha=0.15, linewidth=0.5)
+    return image

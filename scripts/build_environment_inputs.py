@@ -19,13 +19,22 @@ import xarray as xr
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from energyclimates.inputs.environment import storm_events
 
 GMI = "https://opendap.nccs.nasa.gov/dods/merra2_gmi/"
+NOAA = "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
 SNOW = (
     "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/"
     "surface_gauss/weasd.sfc.mon.1981-2010.ltm.nc"
 )
 LAND = "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/surface_gauss/land.sfc.gauss.nc"
+STORM_FILES = [
+    "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+    "StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz",
+]
 
 
 def checksum(path):
@@ -202,7 +211,48 @@ def build_snow(cache, output):
     )
 
 
-BUILDERS = {"gmi": build_gmi, "snow": build_snow}
+def build_storms(cache, output):
+    """Build the storms snapshot from cached or downloaded provider files."""
+    frames, sources = [], []
+    for name in STORM_FILES:
+        path = cache / name
+        sources.append(download(NOAA + name, path))
+        frames.append(
+            pd.read_csv(
+                path,
+                usecols=[
+                    "EVENT_ID",
+                    "EVENT_TYPE",
+                    "BEGIN_YEARMONTH",
+                    "BEGIN_DAY",
+                    "BEGIN_LAT",
+                    "BEGIN_LON",
+                    "MAGNITUDE",
+                ],
+            )
+        )
+    events = storm_events(pd.concat(frames, ignore_index=True))
+    filtering = events.attrs.copy()
+    save(
+        output,
+        "storm-reports-2020-2024",
+        events,
+        {
+            "provider": "NOAA NCEI Storm Events details",
+            "period": "2020–2024 inclusive",
+            "sources": sources,
+            "filtering": filtering,
+            "units": {"hail_diameter_mm": "mm", "date": "local event calendar date"},
+            "grid": {"crs": "EPSG:4326", "input_geometry": "event BEGIN point"},
+            "processing": "Select Hail, Thunderstorm Wind, Lightning; inches × 25.4; "
+            "discard invalid dates/coordinates and 0,0 sentinels; unique event IDs.",
+            "limitations": "U.S. report inventory, not uniform observation coverage. No report does "
+            "not mean no hazard. Bias toward populated areas and significant events.",
+        },
+    )
+
+
+BUILDERS = {"gmi": build_gmi, "snow": build_snow, "storms": build_storms}
 
 
 def main():

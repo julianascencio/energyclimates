@@ -8,10 +8,11 @@ import pandas as pd
 import pytest
 
 from energyclimates.analysis.environment import run_environment
-from energyclimates.inputs.environment import read_environment
+from energyclimates.inputs.environment import read_environment, storm_events
 from energyclimates.methods.environment import (
     snow_screen,
     soiling_screen,
+    storm_report_grid,
 )
 
 
@@ -52,6 +53,64 @@ def test_incomplete_monthly_series_do_not_become_valid_annual_indicators(functio
         function(monthly(column, [1] * 11))
     with pytest.raises(ValueError, match="physical range"):
         function(monthly(column, [-1] * 12))
+
+
+def reports():
+    return pd.DataFrame(
+        {
+            "event_id": [1, 2, 3, 4, 5],
+            "event_type": ["Hail"] * 5,
+            "date": ["2020-06-01", "2020-06-01", "2024-06-01", "2019-06-01", "2022-06-01"],
+            "latitude": [35.1] * 5,
+            "longitude": [-99.8] * 5,
+            "hail_diameter_mm": [25.4, 50.8, 25.4, 100, np.nan],
+        }
+    )
+
+
+def test_noaa_adapter_hail_units_sentinels_and_wind():
+    frame = pd.DataFrame(
+        {
+            "EVENT_ID": [1, 2, 3, 4],
+            "EVENT_TYPE": ["Hail", "Thunderstorm Wind", "Hail", "Hail"],
+            "BEGIN_YEARMONTH": [202001] * 4,
+            "BEGIN_DAY": [1, 1, 1, 32],
+            "BEGIN_LAT": [35, 35, 0, 35],
+            "BEGIN_LON": [-100, -100, 0, -100],
+            "MAGNITUDE": [2.0, 60.0, 1.0, 1.0],
+        }
+    )
+    result = storm_events(frame)
+    assert len(result) == 2
+    assert result.hail_diameter_mm.iloc[0] == 50.8
+    assert np.isnan(result.hail_diameter_mm.iloc[1])
+    assert result.attrs["excluded_invalid_reports"] == 2
+
+
+def test_normalized_storm_inputs_reject_missing_dates_and_invalid_hail_size():
+    frame = reports()
+    frame.loc[0, "date"] = None
+    with pytest.raises(ValueError, match="dates must be present"):
+        storm_report_grid(frame, event_types=["Hail"], start_year=2020, end_year=2024)
+    for size in (-1, np.inf):
+        frame = reports()
+        frame.loc[0, "hail_diameter_mm"] = size
+        with pytest.raises(ValueError, match="Hail diameters"):
+            storm_report_grid(frame, event_types=["Hail"], start_year=2020, end_year=2024)
+
+
+def test_report_grid_wraps_dateline_and_handles_empty_selection():
+    frame = reports().iloc[:2].copy()
+    frame["longitude"] = [-180, 180]
+    frame["latitude"] = 90
+    result = storm_report_grid(frame, event_types=["Hail"], start_year=2020, end_year=2024)
+    assert len(result) == 1
+    assert result.longitude.iloc[0] == -179.5
+    assert result.latitude.iloc[0] == 89.5
+    assert result.reported_days.iloc[0] == 1
+    empty = storm_report_grid(frame, event_types=["Lightning"], start_year=2020, end_year=2024)
+    assert empty.empty
+    assert "reported_days_per_year" in empty
 
 
 def test_snapshot_hash_and_study_export(tmp_path):
@@ -119,3 +178,18 @@ def test_rectilinear_global_dateline_half_cell_is_visible_on_both_edges():
     assert image.get_coordinates()[0, 0, 0] == -180
     assert image.get_coordinates()[0, -1, 0] == 180
     plt.close("all")
+
+
+def test_thunderstorm_study_keeps_wind_and_lightning_separate():
+    frame = reports().iloc[:3].copy()
+    frame["event_type"] = ["Thunderstorm Wind", "Lightning", "Thunderstorm Wind"]
+    frame["hail_diameter_mm"] = np.nan
+    wind = run_environment(
+        frame, "thunderstorm", start_year=2020, end_year=2024, event_types=["Thunderstorm Wind"]
+    )
+    lightning = run_environment(
+        frame, "thunderstorm", start_year=2020, end_year=2024, event_types=["Lightning"]
+    )
+    assert wind.indicators.reported_days_per_year.iloc[0] == 0.4
+    assert lightning.indicators.reported_days_per_year.iloc[0] == 0.2
+    assert "maximum_reported_hail_mm" not in wind.indicators

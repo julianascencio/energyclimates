@@ -45,6 +45,9 @@ SHA-256 hashes, periods, units, processing and limitations.
   https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis.derived/surface_gauss/catalog.html .
   Attribute NCEP/NCAR Reanalysis and NOAA PSL. U.S. government data are generally
   public domain; source scientific attribution remains required practice.
+- **NOAA NCEI Storm Events**: filtered 2020–2024 public U.S. event-report archives,
+  with original report IDs and dates. Attribute NOAA/NCEI and the National Weather
+  Service. https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/ .
 
 The numerical methods and snapshot-building code use the repository's MIT licence.
 No provider endorses these screening indicators.

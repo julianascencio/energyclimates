@@ -26,3 +26,8 @@ as if they were a common physical scale.
 
 `all` in the analysis/CLI API means PV, hybrid and BESS. KGPV is selected separately.
 Missing required months yield `zone_id=0` and an insufficient-data status.
+
+## Environmental methods
+
+See the [environmental map workflows](environment-maps.md) for available studies,
+input contracts, units, scientific limits and offline runnable examples.

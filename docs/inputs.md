@@ -41,3 +41,8 @@ The earlier `kgpv fetch` commands remain available; consult `kgpv --help`.
 
 Use [DATA_LICENSES.md](https://github.com/julianascencio/energyclimates/blob/main/DATA_LICENSES.md)
 for source-specific terms. A data provider's licence is separate from the code's MIT licence.
+
+## Environmental inputs
+
+See the [environmental map workflows](environment-maps.md) for available studies,
+input contracts, units, scientific limits and offline runnable examples.

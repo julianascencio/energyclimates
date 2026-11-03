@@ -18,6 +18,7 @@ from energyclimates import load_dataset, extract_features, classify_features
 from energyclimates.inputs import example_climate
 from energyclimates.methods import load_rules
 from energyclimates.analysis import run_classification
+from energyclimates.analysis.environment import run_environment
 from energyclimates.methods.ml import predict_clusters
 import energyclimates.ml
 import energyclimates.pvcz
@@ -32,6 +33,13 @@ study.write('results')
 manifest = json.loads(Path('results/manifest.json').read_text())
 assert manifest['input']['metadata']['synthetic'] is True
 assert len(run_classification(example_climate(), technology='kgpv').classifications) == 4
+import pandas as pd
+dust = pd.DataFrame({'latitude': [50.0], 'longitude': [10.0],
+                     'dust_ug_m3_months': [[100.0] * 12]})
+environment = run_environment(dust, 'soiling', tilt_degrees=0)
+assert abs(environment.indicators.dry_deposition_g_m2_day.iloc[0] - 0.00864) < 1e-12
+environment.write('environment-results')
+assert json.loads(Path('environment-results/manifest.json').read_text())['kind'] == 'soiling'
 for name in ('energyclimates', 'pvclimate', 'kgpv'):
     entry = next(e for e in distribution('energyclimates').entry_points if e.name == name)
     import sys
@@ -59,6 +67,9 @@ def main():
             "energyclimates/inputs/__init__.py",
             "energyclimates/methods/__init__.py",
             "energyclimates/analysis/__init__.py",
+            "energyclimates/inputs/environment.py",
+            "energyclimates/methods/environment.py",
+            "energyclimates/analysis/environment.py",
             "kgpv/engine/rules-v1.json",
         ):
             assert required in names, required
@@ -70,6 +81,9 @@ def main():
         for required in (
             "pyproject.toml",
             "docs/conf.py",
+            "examples/environment/gmi-2019.parquet",
+            "examples/environment/gmi-2019.metadata.json",
+            "scripts/build_environment_inputs.py",
             "scripts/check_distribution.py",
             "tests/test_public_workflow.py",
             "examples/monthly-climate.csv",

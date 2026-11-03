@@ -1,0 +1,77 @@
+"""Connect environmental inputs and methods to auditable study outputs."""
+
+import json
+from dataclasses import dataclass
+from pathlib import Path
+
+import pandas as pd
+
+from energyclimates.inputs.environment import read_environment
+from energyclimates.methods.environment import (
+    DAYS,
+    soiling_screen,
+)
+
+METHODS = {
+    "soiling": (
+        soiling_screen,
+        {"deposition_velocity_m_s": 0.001, "tilt_degrees": 30, "days": DAYS.tolist()},
+        "Dust-only dry deposition scenario; no rain, cleaning or PV loss model.",
+    ),
+}
+
+
+OUTPUT_UNITS = {
+    "latitude": "degrees_north",
+    "longitude": "degrees_east",
+    "valid_months": "months",
+    "mean_dust_ug_m3": "µg/m³",
+    "dry_deposition_g_m2_day": "g/m²/day",
+    "peak_month_deposition_g_m2_day": "g/m²/day",
+}
+
+
+@dataclass
+class EnvironmentStudy:
+    """Computed indicator table and a source/assumption manifest."""
+
+    indicators: pd.DataFrame
+    manifest: dict
+
+    def write(self, output):
+        """Save indicators.csv and manifest.json in a dedicated output folder."""
+        folder = Path(output)
+        folder.mkdir(parents=True, exist_ok=True)
+        self.indicators.to_csv(folder / "indicators.csv", index=False)
+        (folder / "manifest.json").write_text(json.dumps(self.manifest, indent=2, allow_nan=False))
+        return folder
+
+
+def run_environment(source, kind, **parameters):
+    """Run a registered study on a snapshot path or normalized DataFrame.
+
+    Available ``kind`` names are listed in ``METHODS``.
+    Storm studies require explicit ``start_year`` and ``end_year``. Inputs must
+    match the units documented by the selected method. In-memory inputs should
+    carry provenance in ``attrs``; no provenance is invented when it is absent.
+    """
+    if kind not in METHODS:
+        raise ValueError(f"Unknown environmental study: {kind}")
+    frame = source.copy() if isinstance(source, pd.DataFrame) else read_environment(source)
+    function, defaults, limitations = METHODS[kind]
+    options = {**defaults, **parameters}
+    if "days" in options:
+        options["days"] = list(map(float, options["days"]))
+    indicators = function(frame, **options)
+    manifest = {
+        "schema": "energyclimates-environment-v1",
+        "kind": kind,
+        "input": frame.attrs,
+        "method": function.__name__,
+        "parameters": options,
+        "output_units": {column: OUTPUT_UNITS[column] for column in indicators.columns},
+        "missing_data": "Incomplete monthly series stay missing; unreported event cells stay absent.",
+        "limitations": limitations,
+    }
+    indicators.attrs = manifest
+    return EnvironmentStudy(indicators, manifest)

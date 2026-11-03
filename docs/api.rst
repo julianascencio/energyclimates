@@ -35,6 +35,18 @@ Mapping
 .. automodule:: energyclimates.analysis.maps
    :members:
 
+Environmental inputs, methods and analysis
+------------------------------------------
+
+.. automodule:: energyclimates.inputs.environment
+   :members:
+
+.. automodule:: energyclimates.methods.environment
+   :members:
+
+.. automodule:: energyclimates.analysis.environment
+   :members:
+
 Compatibility
 -------------
 

@@ -172,6 +172,10 @@ provides the executed PNG/SVG/CSV result download and reproducibility instructio
 The runner exports figures, nine numeric tables and input/code/output checksums;
 the documentation workflow rebuilds the results on every deployment.
 
+The [environmental map gallery](https://julianascencio.github.io/energyclimates/environment-maps.html)
+adds public-data inputs, reusable screening methods and auditable analysis exports.
+Each study documents its source period, units, coverage and limitations.
+
 ## Documentation and atlas
 
 ```bash

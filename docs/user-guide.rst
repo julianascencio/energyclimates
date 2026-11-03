@@ -8,6 +8,7 @@ User guide
    methods
    analysis
    map-examples
+   environment-maps
    atlas
    ENGINE_GUIDE
    ATLAS_REFERENCE

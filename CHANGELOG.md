@@ -1,5 +1,9 @@
 # Changes
 
+## Environmental map gallery
+
+- Add an offline soiling map with source provenance, methods and analysis exports.
+
 ## 0.2.0 — unreleased
 
 - Add public `inputs`, `methods` and `analysis` layers over the existing engine.

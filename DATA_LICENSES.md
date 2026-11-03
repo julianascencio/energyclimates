@@ -28,3 +28,18 @@ notice when redistributing them.
 The source data were retrieved for the September 2026 atlas release. URLs and
 provider availability can change. Inclusion of research references does not
 redistribute those papers or imply author endorsement of the new classifications.
+
+## Environmental gallery snapshots
+
+`examples/environment/*.parquet` are derived public-data inputs, not MIT-licensed
+original observations. Their adjacent metadata record exact source URLs, file
+SHA-256 hashes, periods, units, processing and limitations.
+
+- **NASA GSFC / NCCS MERRA-2 GMI**: 2019 monthly surface dust and leaf-area index
+  from the public replay simulation, sampled at every fourth grid centre.
+  Attribute NASA GSFC ACDL/GMAO and the GMI project:
+  https://acd-ext.gsfc.nasa.gov/Projects/GEOSCCM/MERRA2GMI/ . These are model outputs;
+  do not describe GMI aerosols as assimilated aerosol observations.
+
+The numerical methods and snapshot-building code use the repository's MIT licence.
+No provider endorses these screening indicators.

@@ -9,6 +9,7 @@ import pandas as pd
 from energyclimates.inputs.environment import read_environment
 from energyclimates.methods.environment import (
     DAYS,
+    population_screen,
     snow_screen,
     soiling_screen,
     storm_report_grid,
@@ -30,6 +31,11 @@ METHODS = {
         vegetation_screen,
         {"days": DAYS.tolist()},
         "Model leaf-area index, not land cover, tree height or shading.",
+    ),
+    "population": (
+        population_screen,
+        {},
+        "Census-based density; not population totals or electricity demand.",
     ),
     "thunderstorm": (
         storm_report_grid,
@@ -56,6 +62,8 @@ OUTPUT_UNITS = {
     "months_mean_swe_above_threshold": "months",
     "mean_lai": "m² leaf/m² ground",
     "seasonal_lai_range": "m² leaf/m² ground",
+    "population_density_km2": "people/km²",
+    "log10_population_density_plus_one": "log10(1 + density in people/km²)",
     "reported_events": "reports",
     "reported_days": "distinct local calendar dates",
     "reported_days_per_year": "distinct local calendar dates/year",

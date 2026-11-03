@@ -50,6 +50,7 @@ The installed Python package works independently of the repository's atlas asset
    getting-started
    user-guide
    auto_examples/index
+   environment-maps
    api
    development
    references

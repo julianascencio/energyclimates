@@ -50,6 +50,9 @@ def main():
             "kgpv/engine/rules.py",
             "kgpv/engine/ml.py",
             "scripts/run_map_gallery.py",
+            "energyclimates/inputs/environment.py",
+            "energyclimates/methods/environment.py",
+            "energyclimates/analysis/environment.py",
         )
     ]
     runtime = {name: version(name) for name in ("numpy", "pandas", "matplotlib", "pyarrow")}
@@ -92,21 +95,26 @@ def main():
             "python": platform.python_version(),
             "dependencies": runtime,
             "context": namespace["map_context"],
-            "climate": namespace["features"].attrs,
-            "grid": {
-                "crs": "EPSG:4326",
-                "resolution_degrees": 0.5,
-                "display": "equirectangular",
-                "interpolation": "none",
-                "grey_background": "No supplied value or unclassified cell",
-            },
+            "input_metadata": namespace["features"].attrs,
+            "grid": namespace.get(
+                "map_grid",
+                {
+                    "crs": "EPSG:4326",
+                    "resolution_degrees": 0.5,
+                    "display": "equirectangular",
+                    "interpolation": "none",
+                    "grey_background": "No supplied value or unclassified cell",
+                },
+            ),
             "inputs_sha256": {
                 str(p.relative_to(root)): checksum(p) for p in namespace["input_files"]
             },
             "code_sha256": {str(p.relative_to(root)): checksum(p) for p in [example, *sources]},
             "tables": table_metadata,
             "outputs_sha256": {p.name: checksum(p) for p in files},
-            "limitations": "Climate screening, not yield, storage sizing or battery-life predictions.",
+            "limitations": namespace["map_context"].get(
+                "limitations", "Screening, not yield, storage sizing or battery-life predictions."
+            ),
         }
         manifest_path = folder / "manifest.json"
         manifest_path.write_text(

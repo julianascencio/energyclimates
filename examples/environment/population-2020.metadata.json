@@ -1,0 +1,24 @@
+{
+  "provider": "CIESIN / NASA SEDAC GPWv4.11, Stanford Natural Capital Project mirror",
+  "period": "2020 census-based estimate",
+  "sources": [
+    {
+      "url": "https://data.naturalcapitalalliance.stanford.edu/download/global/ciesin-nasa-gpw-grdi/ciesen_nasa_gpw_v4_population_density_2020.tif",
+      "sha256": "46eceadf33806eca8023a3abf9b14555bdc44996f524d7529ef411f074a768e5",
+      "bytes": 343817276
+    }
+  ],
+  "reference": "https://doi.org/10.7927/H49C6VHW",
+  "units": {
+    "population_density_km2": "people/km\u00b2"
+  },
+  "grid": {
+    "crs": "EPSG:4326",
+    "resolution_degrees": 0.5
+  },
+  "processing": "Arithmetic mean of valid native 30-arcsecond densities in 60\u00d760 blocks; no overview use, no nodata-to-zero, no population totals computed.",
+  "limitations": "Density screening preview, not a land-area-weighted or count-conserving aggregate. Small settlements and coastal partial cells need original data.",
+  "schema": "energyclimates-environment-input-v1",
+  "sha256": "bfefc0fe8dacc5fd7d52a66d910c7128f8c56bbb6d28248f2eb5f91f4f756065",
+  "rows": 70123
+}

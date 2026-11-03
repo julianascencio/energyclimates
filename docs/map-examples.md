@@ -1,14 +1,16 @@
 # Runnable climate maps
 
-Six map studies execute from the bundled **67,420-cell CRU TS 4.10 + ERA5/NCAR
-snapshot**, with a common **1996–2022** period and **0.5° cells**. The gallery shows
-the figures and printed numeric results produced during the documentation build.
-Each gallery page has Python and notebook downloads. All examples run offline
-after installation: no API credentials, map tiles or boundary downloads are needed.
+Twelve map studies execute from bundled public-data snapshots. The six climate
+studies share 67,420 CRU TS 4.10 + ERA5/NCAR cells, 1996–2022, at 0.5° resolution.
+Six [environmental studies](environment-maps.md) add soiling, snow, thunderstorms,
+hail, vegetation and population, each with its own period, grid and coverage.
+The gallery shows figures and numeric results produced during the docs build.
+Every page includes Python and notebook downloads. All examples run offline
+after installation, without API credentials, map tiles or boundary downloads.
 
 {download}`Download all executed map results (ZIP) <_generated/map-results.zip>`
 
-The archive contains six figures (13 map panels), PNG and SVG versions, nine CSV
+The archive contains twelve figures (25 map panels), PNG and SVG versions, sixteen CSV
 tables, printed results, runnable example sources, and per-study JSON manifests.
 Each manifest records source-file and code SHA-256 hashes, package/dependency
 versions, units, period, grid resolution and output checksums. Data attribution
@@ -24,6 +26,9 @@ they are not manually supplied screenshots.
 | {doc}`Europe and neighbouring cells <auto_examples/plot_11_map_europe_storage>` | Weakest-month GHI and BESS thermal profiles | Features and classifications for 5,595 cells |
 | {doc}`Global ML groups <auto_examples/plot_12_map_ml>` | PV clusters and assignment separation | 67,420 predictions, distances, separation and status |
 
+The six additional examples, input contracts and interpretation guidance are in
+[Environmental risk and exposure maps](environment-maps.md).
+
 ## Run and save results
 
 From a repository checkout, install the plotting extra:
@@ -33,7 +38,7 @@ python -m pip install -e '.[examples]'
 python examples/gallery/plot_10_map_chile.py
 ```
 
-Run all six studies headlessly and retain the complete result bundle:
+Run all twelve studies headlessly and retain the complete result bundle:
 
 ```bash
 python scripts/run_map_gallery.py --output results/map-gallery \

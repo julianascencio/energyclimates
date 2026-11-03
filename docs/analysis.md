@@ -34,3 +34,10 @@ made by `run_classification`.
 For ML studies, use `energyclimates.methods.ml` and the existing `train`, `predict`
 and `evaluate-target` commands. Inspect holdout diagnostics, missing-data counts,
 source periods and assumptions before interpreting any map as useful energy evidence.
+
+## Environmental maps
+
+The [environmental workflows](environment-maps.md) cover soiling, snow,
+thunderstorms, hail, vegetation and population, with runnable inputs, explicit
+methods and exported analysis results. Use the corresponding
+`energyclimates.analysis.environment` module.

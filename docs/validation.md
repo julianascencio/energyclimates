@@ -143,3 +143,21 @@ experimental profiles. Browser interaction and visual layout were not checked in
 a browser in this environment. Python 3.11/3.13 and hosted deployment are checked
 separately by the configured GitHub Actions jobs; local checks do not establish
 that Pages or PyPI are already published.
+
+## Environmental gallery · 3 November 2026
+
+- Six environmental examples execute offline from four verified public-data
+  snapshots: 3,673 sampled GMI land cells; 5,914 native NCEP land cells;
+  136,646 U.S. storm reports; and 70,123 population-density preview cells.
+- NOAA normalization excluded 10 of 136,656 selected reports with invalid
+  coordinates/dates. Hail units, local-date deduplication, five-year denominators,
+  missing-size filtering and absent-cell semantics are checked explicitly.
+- Tests cover deposition dimensions/tilt, snow thresholds, monthly completeness,
+  LAI weighting, zero versus missing population, snapshot hashes, exports and
+  rectilinear plotting gaps. These are software/contract checks, not independent
+  validation of hazard accuracy, design suitability or PV-loss performance.
+- All 18 gallery examples executed in a warnings-as-errors Sphinx build; the
+  batch produced 12 figures (25 panels), 16 CSV tables and source/parameter hashes.
+  Six new figures were inspected for orientation, legends and overlapping labels.
+- The site checker verified 3,260 local links and all 49 existing atlas layers.
+  These additions are in the example gallery; they do not replace atlas layers.

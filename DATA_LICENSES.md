@@ -28,3 +28,32 @@ notice when redistributing them.
 The source data were retrieved for the September 2026 atlas release. URLs and
 provider availability can change. Inclusion of research references does not
 redistribute those papers or imply author endorsement of the new classifications.
+
+## Environmental gallery snapshots
+
+`examples/environment/*.parquet` are derived public-data inputs, not MIT-licensed
+original observations. Their adjacent metadata record exact source URLs, file
+SHA-256 hashes, periods, units, processing and limitations.
+
+- **NASA GSFC / NCCS MERRA-2 GMI**: 2019 monthly surface dust and leaf-area index
+  from the public replay simulation, sampled at every fourth grid centre.
+  Attribute NASA GSFC ACDL/GMAO and the GMI project:
+  https://acd-ext.gsfc.nasa.gov/Projects/GEOSCCM/MERRA2GMI/ . These are model outputs;
+  do not describe GMI aerosols as assimilated aerosol observations.
+- **NOAA PSL NCEP/NCAR Reanalysis 1**: 1981–2010 monthly ground snow-water
+  climatology. Data provided by NOAA PSL, Boulder, Colorado, USA:
+  https://psl.noaa.gov/thredds/catalog/Datasets/ncep.reanalysis.derived/surface_gauss/catalog.html .
+  Attribute NCEP/NCAR Reanalysis and NOAA PSL. U.S. government data are generally
+  public domain; source scientific attribution remains required practice.
+- **NOAA NCEI Storm Events**: filtered 2020–2024 public U.S. event-report archives,
+  with original report IDs and dates. Attribute NOAA/NCEI and the National Weather
+  Service. https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/ .
+- **CIESIN / NASA SEDAC GPWv4.11 Population Density (2020)**:
+  https://doi.org/10.7927/H49C6VHW . Source GeoTIFF distributed by Stanford's
+  Natural Capital Project; attribution to CIESIN/Columbia University and NASA
+  SEDAC remains with the source dataset. Follow the source dataset's usage terms;
+  this repository adds no exclusive rights. The 0.5° preview is an arithmetic
+  mean of valid densities and must not be used as a population-count raster.
+
+The new numerical methods and snapshot-building code are covered by this
+repository's MIT licence. No provider endorses these screening indicators.

@@ -167,6 +167,12 @@ python scripts/run_map_gallery.py --output results/map-gallery \
   --archive results/map-gallery.zip
 ```
 
+The gallery also includes runnable **soiling, snow, thunderstorm, hail, vegetation
+and population maps**, with public-data inputs, methods and analysis exports.
+See the [environmental map guide](https://julianascencio.github.io/energyclimates/environment-maps.html)
+for source periods, U.S. event-report coverage and explicit screening assumptions.
+
+
 The [map guide](https://julianascencio.github.io/energyclimates/map-examples.html)
 provides the executed PNG/SVG/CSV result download and reproducibility instructions.
 The runner exports figures, nine numeric tables and input/code/output checksums;

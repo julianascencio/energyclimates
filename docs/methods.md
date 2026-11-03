@@ -26,3 +26,10 @@ as if they were a common physical scale.
 
 `all` in the analysis/CLI API means PV, hybrid and BESS. KGPV is selected separately.
 Missing required months yield `zone_id=0` and an insufficient-data status.
+
+## Environmental maps
+
+The [environmental workflows](environment-maps.md) cover soiling, snow,
+thunderstorms, hail, vegetation and population, with runnable inputs, explicit
+methods and exported analysis results. Use the corresponding
+`energyclimates.methods.environment` module.

@@ -30,6 +30,11 @@ METHODS = {
         {"event_types": ["Thunderstorm Wind", "Lightning"], "resolution": 1.0},
         "Reported damaging/significant U.S. events, not all thunderstorms or probability.",
     ),
+    "hail": (
+        storm_report_grid,
+        {"event_types": ["Hail"], "resolution": 1.0, "minimum_hail_mm": 25.4},
+        "Reported U.S. hail >=25.4 mm; reporting bias, no return-period or module-damage model.",
+    ),
 }
 
 

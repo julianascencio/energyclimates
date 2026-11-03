@@ -53,3 +53,23 @@ def soiling_screen(frame, *, deposition_velocity_m_s=0.001, tilt_degrees=30, day
     result["dry_deposition_g_m2_day"] = np.where(valid, flux @ _weights(days), np.nan)
     result["peak_month_deposition_g_m2_day"] = np.where(valid, flux.max(axis=1), np.nan)
     return result
+
+
+def snow_screen(frame, *, threshold_mm=1.0, days=DAYS):
+    """Ground snow exposure from twelve monthly snow-water equivalents (mm).
+
+    Count monthly MEANS at or above ``threshold_mm``; this is not snow-cover
+    days or snow depth. Ground SWE does not estimate snow on modules or PV loss.
+    Incomplete years keep all aggregate indicators missing.
+    """
+    if not np.isfinite(threshold_mm) or threshold_mm <= 0:
+        raise ValueError("snow threshold must be finite and positive")
+    values, valid, count = _monthly(frame, "swe_mm_months")
+    result = _base(frame)
+    result["valid_months"] = count
+    result["mean_swe_mm"] = np.where(valid, values @ _weights(days), np.nan)
+    result["peak_month_swe_mm"] = np.where(valid, values.max(axis=1), np.nan)
+    result["months_mean_swe_above_threshold"] = np.where(
+        valid, (values >= threshold_mm).sum(axis=1), np.nan
+    )
+    return result

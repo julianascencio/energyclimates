@@ -6,7 +6,7 @@ async function json(url){const r=await fetch(url);if(!r.ok)throw Error('Could no
 function load(text,example=false){parsed=parseCSV(text);results=[];$('#lab-results').innerHTML='';$('#lab-export').hidden=true;$('#lab-mapping').hidden=false;$('#lab-fields').innerHTML=fields.map(([key,label,defaultName])=>`<label>${label}<select data-field="${key}">${['id','temperature','ghi'].includes(key)?'<option value="">Not supplied</option>':''}${parsed.header.map(h=>`<option value="${esc(h)}" ${h===defaultName?'selected':''}>${esc(h)}</option>`).join('')}</select></label>`).join('');for(const key of ['temperature','ghi']){if(!parsed.header.includes(fields.find(x=>x[0]===key)[2]))$(`[data-field="${key}"]`).value=''}$('#lab-february').value=example?String(28+7/27):'28';$('#lab-temp-unit').value='C';$('#lab-sun-unit').value='kWh/m2';$('#lab-status').textContent=`${parsed.rows.length.toLocaleString()} monthly rows loaded. Check the columns and units, then calculate.`}
 export function initLab(){
   $('#lab-file').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>10_000_000)throw Error('Use Python for files larger than 10 MB');load(await f.text())}catch(e){parsed=null;$('#lab-mapping').hidden=true;$('#lab-results').innerHTML='';$('#lab-export').hidden=true;$('#lab-status').textContent=e.message}};
-  $('#lab-example').onclick=async()=>{try{const r=await fetch('/downloads/monthly-climate.csv');if(!r.ok)throw Error('Example unavailable');load(await r.text(),true)}catch(e){$('#lab-status').textContent=e.message}};
+  $('#lab-example').onclick=async()=>{try{const r=await fetch('./downloads/monthly-climate.csv');if(!r.ok)throw Error('Example unavailable');load(await r.text(),true)}catch(e){$('#lab-status').textContent=e.message}};
   $('#lab-form').onsubmit=async e=>{
     e.preventDefault();const button=$('#lab-run');button.disabled=true;$('#lab-status').textContent='Calculating…';results=[];$('#lab-results').innerHTML='';$('#lab-export').hidden=true;
     try{
@@ -17,7 +17,7 @@ export function initLab(){
       const feb=Number($('#lab-february').value);if(!Number.isFinite(feb)||feb<28||feb>29)throw Error('February must be 28–29 days; use Python for other calendars');
       const mapping={coordinates:coords,variables,month_days:[31,feb,31,30,31,30,31,31,30,31,30,31]};
       const features=monthlyFeatures(parsed.rows,mapping),tech=$('#lab-technology').value,method=$('#lab-method').value;
-      if(!rules)rules=await json('/models/rules-v1.json');if(method==='ml'&&!models[tech])models[tech]=await json(`/models/${tech}.json`);
+      if(!rules)rules=await json('./models/rules-v1.json');if(method==='ml'&&!models[tech])models[tech]=await json(`./models/${tech}.json`);
       results=features.map(f=>({...f,technology:tech,method,...(method==='ml'?predict(f,models[tech]):profile(f,tech,rules))}));
       const valid=results.filter(r=>r.zone_id>0).length;$('#lab-status').textContent=`${valid.toLocaleString()} of ${results.length.toLocaleString()} locations classified. ${method==='ml'?'ML describes similarity to the atlas training climates.':'Profiles use the experimental rules shown in Data & method.'}`;
       const value=(n,unit)=>Number.isFinite(n)?`${n.toLocaleString(undefined,{maximumFractionDigits:1})}${unit}`:'Missing';

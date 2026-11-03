@@ -24,7 +24,7 @@ pvclimate train examples/global-climate-features.parquet --technology pv --clust
 pvclimate predict examples/monthly-climate.csv --mapping examples/monthly-mapping.json --model my-model.json
 ```
 
-[The full guide](docs/ENGINE_GUIDE.md) covers field mappings, rules, Python APIs,
+[The full guide](ENGINE_GUIDE.md) covers field mappings, rules, Python APIs,
 training, evaluation and adding your own calculated layer to the website.
 The download includes 67,420 real feature rows and three trained JSON models.
 New profiles describe climate exposure; they have not been validated as estimates

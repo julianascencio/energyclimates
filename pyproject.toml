@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "energyclimates"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Climate classification, machine learning and mapping for energy systems"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,17 +26,27 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "build>=1.2", "ruff>=0.6"]
+dev = ["pytest>=8", "build>=1.2", "twine>=6", "ruff>=0.6"]
+examples = ["matplotlib>=3.8"]
+docs = [
+  "sphinx>=8,<10", "pydata-sphinx-theme>=0.16,<0.25", "myst-parser>=4,<6",
+  "sphinx-design>=0.6,<0.8", "sphinx-gallery>=0.19,<0.23", "matplotlib>=3.8",
+]
 
 [project.urls]
 Homepage = "https://github.com/julianascencio/energyclimates"
-Documentation = "https://github.com/julianascencio/energyclimates/tree/main/docs"
+Documentation = "https://julianascencio.github.io/energyclimates/"
+Source = "https://github.com/julianascencio/energyclimates"
+Changelog = "https://github.com/julianascencio/energyclimates/blob/main/CHANGELOG.md"
 Issues = "https://github.com/julianascencio/energyclimates/issues"
 
 [project.scripts]
 energyclimates = "energyclimates.cli:main"
 pvclimate = "kgpv.engine.cli:main"
 kgpv = "kgpv.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "energyclimates.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["energyclimates*", "kgpv*"]

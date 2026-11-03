@@ -1,0 +1,17 @@
+include LICENSE NOTICE DATA_LICENSES.md CITATION.cff CHANGELOG.md CONTRIBUTING.md
+recursive-include energyclimates *.py
+recursive-include kgpv *.py *.json
+recursive-include tests *.py *.cjs *.mjs
+recursive-include docs *.md *.rst *.py *.css *.txt
+recursive-include examples *.py *.rst *.csv *.json *.parquet
+recursive-include configs *.json
+recursive-include scripts *.py
+recursive-include atlas *.html *.css *.js *.mjs *.svg *.json *.tif *.txt *.csv *.png
+prune docs/_build
+prune docs/auto_examples
+prune docs/_generated
+prune atlas/data
+recursive-include atlas/data *.json *.tif
+prune build
+prune dist
+global-exclude __pycache__ *.py[cod]

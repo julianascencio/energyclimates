@@ -23,3 +23,14 @@ assert.equal(b.style.clipPath,'inset(0 0 0 350px)');
 elems['#compare-mode'].value='blend';vm.runInNewContext('clipComparison()',context);
 assert.equal(a.style.clipPath,'');assert.equal(b.style.clipPath,'');
 console.log('Native-grid sampling, no-data, longitude wrapping, scaled swipe clipping and blend reset passed.');
+
+// Archived catalogue URLs must resolve beneath either standalone or project hosting.
+const catalogPath=vm.runInNewContext('('+source.match(/^function catalogPath.*$/m)[0]+')');
+for(const base of ['https://example.org/','https://example.org/energyclimates/atlas/']){
+  for(const path of ['/data/grid.bin','/data/grid.png','/data/grid.tif','/models/pv.json']){
+    assert.equal(new URL(catalogPath('',path),base).href,base+path.slice(1));
+  }
+}
+assert.equal(catalogPath('','https://provider.example/data'), 'https://provider.example/data');
+assert.equal(catalogPath('',42),42);
+console.log('Atlas catalogue paths work at domain root and GitHub Pages project paths.');

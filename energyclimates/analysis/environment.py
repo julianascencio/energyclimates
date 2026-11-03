@@ -11,6 +11,7 @@ from energyclimates.methods.environment import (
     DAYS,
     snow_screen,
     soiling_screen,
+    storm_report_grid,
 )
 
 METHODS = {
@@ -23,6 +24,11 @@ METHODS = {
         snow_screen,
         {"threshold_mm": 1.0, "days": DAYS.tolist()},
         "Ground monthly-mean SWE exposure, not module snow cover or PV loss.",
+    ),
+    "thunderstorm": (
+        storm_report_grid,
+        {"event_types": ["Thunderstorm Wind", "Lightning"], "resolution": 1.0},
+        "Reported damaging/significant U.S. events, not all thunderstorms or probability.",
     ),
 }
 
@@ -37,6 +43,10 @@ OUTPUT_UNITS = {
     "mean_swe_mm": "mm water equivalent",
     "peak_month_swe_mm": "mm water equivalent",
     "months_mean_swe_above_threshold": "months",
+    "reported_events": "reports",
+    "reported_days": "distinct local calendar dates",
+    "reported_days_per_year": "distinct local calendar dates/year",
+    "maximum_reported_hail_mm": "mm",
 }
 
 

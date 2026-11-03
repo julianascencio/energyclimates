@@ -1,0 +1,48 @@
+{
+  "provider": "NOAA NCEI Storm Events details",
+  "period": "2020\u20132024 inclusive",
+  "sources": [
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
+      "sha256": "895c56fd46991c4d9a135d67558dc4b447a02a2314efac0ace645135b98f9c9d",
+      "bytes": 10444606
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+      "sha256": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715",
+      "bytes": 10563953
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2022_c20260625.csv.gz",
+      "sha256": "7d6b79d0049a6edec96b061738289daddba90be26fc9afe7b0a6fd617f21452e",
+      "bytes": 11817849
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz",
+      "sha256": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134",
+      "bytes": 12888092
+    },
+    {
+      "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2024_c20260728.csv.gz",
+      "sha256": "2070b83eccab041b36360ab73645b9a249c3eefc5b92b5b3fc0cbba4d9fcc09c",
+      "bytes": 12693243
+    }
+  ],
+  "filtering": {
+    "selected_reports": 136656,
+    "excluded_invalid_reports": 10
+  },
+  "units": {
+    "hail_diameter_mm": "mm",
+    "date": "local event calendar date"
+  },
+  "grid": {
+    "crs": "EPSG:4326",
+    "input_geometry": "event BEGIN point"
+  },
+  "processing": "Select Hail, Thunderstorm Wind, Lightning; inches \u00d7 25.4; discard invalid dates/coordinates and 0,0 sentinels; unique event IDs.",
+  "limitations": "U.S. report inventory, not uniform observation coverage. No report does not mean no hazard. Bias toward populated areas and significant events.",
+  "schema": "energyclimates-environment-input-v1",
+  "sha256": "de7d4b589b28fd433c0a13fd7ae7c7ad2acdc9b32beb65c2f884148d3143b9be",
+  "rows": 136646
+}

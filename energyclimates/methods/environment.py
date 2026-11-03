@@ -1,6 +1,7 @@
 """Physical environmental indicators; no calibrated loss or probability claims."""
 
 import numpy as np
+import pandas as pd
 
 from energyclimates.inputs.environment import validate_coordinates
 
@@ -72,4 +73,71 @@ def snow_screen(frame, *, threshold_mm=1.0, days=DAYS):
     result["months_mean_swe_above_threshold"] = np.where(
         valid, (values >= threshold_mm).sum(axis=1), np.nan
     )
+    return result
+
+
+def storm_report_grid(
+    frame, *, event_types, start_year, end_year, resolution=1.0, minimum_hail_mm=None
+):
+    """Count distinct local report dates and events in occupied geographic bins.
+
+    Denominator is the explicitly declared inclusive record period, never the
+    years containing events. Caller must establish archive coverage. A bin with
+    no selected report is absent, NOT a measured zero hazard. All days with a
+    matching event at its BEGIN location count once per bin, regardless of report
+    multiplicity. Hail size is a reported maximum, not a return-period estimate.
+    """
+    validate_coordinates(frame)
+    if frame.event_id.isna().any() or frame.event_id.duplicated().any():
+        raise ValueError("Event IDs must be unique and present")
+    if not event_types or not set(event_types) <= {"Hail", "Thunderstorm Wind", "Lightning"}:
+        raise ValueError("Unsupported event types")
+    if (
+        not isinstance(start_year, (int, np.integer))
+        or not isinstance(end_year, (int, np.integer))
+        or not 1900 <= start_year <= end_year
+    ):
+        raise ValueError("Declare an ordered inclusive year range")
+    if (
+        not np.isfinite(resolution)
+        or not 0 < resolution <= 90
+        or not np.isclose(180 / resolution, round(180 / resolution))
+    ):
+        raise ValueError("Resolution must be positive and divide 180 degrees")
+    if minimum_hail_mm is not None and (
+        set(event_types) != {"Hail"} or not np.isfinite(minimum_hail_mm) or minimum_hail_mm <= 0
+    ):
+        raise ValueError("A positive hail threshold applies only to Hail reports")
+    dates = pd.to_datetime(frame.date, errors="raise")
+    if dates.isna().any():
+        raise ValueError("Storm report dates must be present")
+    hail_size = frame.loc[frame.event_type.eq("Hail"), "hail_diameter_mm"].to_numpy(dtype=float)
+    if np.isinf(hail_size).any() or (hail_size[np.isfinite(hail_size)] < 0).any():
+        raise ValueError("Hail diameters must be nonnegative or missing")
+    selected = frame.loc[
+        dates.dt.year.between(start_year, end_year) & frame.event_type.isin(event_types)
+    ].copy()
+    selected["date"] = dates.loc[selected.index].dt.normalize()
+    if minimum_hail_mm is not None:
+        selected = selected[selected.hail_diameter_mm >= minimum_hail_mm].copy()
+    # East/north boundary points belong to the last cell; +180 wraps to -180.
+    selected["longitude"] = (
+        np.floor(((selected.longitude + 180) % 360) / resolution) * resolution
+        - 180
+        + resolution / 2
+    )
+    selected["latitude"] = (
+        np.minimum(np.floor((selected.latitude + 90) / resolution), 180 / resolution - 1)
+        * resolution
+        - 90
+        + resolution / 2
+    )
+    result = selected.groupby(["latitude", "longitude"], as_index=False).agg(
+        reported_events=("event_id", "nunique"),
+        reported_days=("date", "nunique"),
+        maximum_reported_hail_mm=("hail_diameter_mm", "max"),
+    )
+    if "Hail" not in event_types:
+        result = result.drop(columns="maximum_reported_hail_mm")
+    result["reported_days_per_year"] = result.reported_days / (end_year - start_year + 1)
     return result

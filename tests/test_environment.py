@@ -13,6 +13,7 @@ from energyclimates.methods.environment import (
     snow_screen,
     soiling_screen,
     storm_report_grid,
+    vegetation_screen,
 )
 
 
@@ -43,6 +44,7 @@ def test_snow_threshold_months_are_not_snow_days():
     [
         (soiling_screen, "dust_ug_m3_months", "dry_deposition_g_m2_day"),
         (snow_screen, "swe_mm_months", "months_mean_swe_above_threshold"),
+        (vegetation_screen, "lai_months", "mean_lai"),
     ],
 )
 def test_incomplete_monthly_series_do_not_become_valid_annual_indicators(function, column, output):
@@ -53,6 +55,12 @@ def test_incomplete_monthly_series_do_not_become_valid_annual_indicators(functio
         function(monthly(column, [1] * 11))
     with pytest.raises(ValueError, match="physical range"):
         function(monthly(column, [-1] * 12))
+
+
+def test_vegetation_day_weighting_and_range():
+    result = vegetation_screen(monthly("lai_months", [12] + [0] * 11))
+    assert result.mean_lai.iloc[0] == pytest.approx(12 * 31 / 365)
+    assert result.seasonal_lai_range.iloc[0] == 12
 
 
 def reports():

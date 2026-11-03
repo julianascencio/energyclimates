@@ -76,6 +76,20 @@ def snow_screen(frame, *, threshold_mm=1.0, days=DAYS):
     return result
 
 
+def vegetation_screen(frame, *, days=DAYS):
+    """Day-weighted mean and seasonal range of model leaf-area index (m²/m²).
+
+    LAI is leaf area per ground area, not tree height, land-cover type, biomass,
+    shading or vegetation-clearance distance. All twelve months are required.
+    """
+    values, valid, count = _monthly(frame, "lai_months")
+    result = _base(frame)
+    result["valid_months"] = count
+    result["mean_lai"] = np.where(valid, values @ _weights(days), np.nan)
+    result["seasonal_lai_range"] = np.where(valid, values.max(axis=1) - values.min(axis=1), np.nan)
+    return result
+
+
 def storm_report_grid(
     frame, *, event_types, start_year, end_year, resolution=1.0, minimum_hail_mm=None
 ):

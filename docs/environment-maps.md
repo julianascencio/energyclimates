@@ -12,6 +12,7 @@ environment-soiling
 environment-snow
 environment-thunderstorm
 environment-hail
+environment-vegetation
 ```
 
 | Layer and runnable example | Input | Method and analysis output |
@@ -20,6 +21,7 @@ environment-hail
 | {doc}`Snow <auto_examples/plot_14_map_snow>` | NOAA NCEP/NCAR Reanalysis 1 ground snow-water equivalent, 1981–2010 | Months with monthly-mean SWE ≥1 mm, mean and peak monthly SWE |
 | {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | NOAA NCEI U.S. Thunderstorm Wind and Lightning reports, 2020–2024 | Distinct local report dates/year in 1° bins; separate wind and lightning maps |
 | {doc}`Hail <auto_examples/plot_16_map_hail>` | NOAA NCEI U.S. hail reports and diameters, 2020–2024 | Report days/year for hail ≥25.4 mm and largest reported diameter per 1° bin |
+| {doc}`Vegetation <auto_examples/plot_17_map_vegetation>` | NASA MERRA-2 GMI model monthly leaf-area index, 2019 | Day-weighted mean LAI and seasonal range, m² leaf/m² ground |
 
 ## Input contracts
 
@@ -32,6 +34,7 @@ WGS84 degrees. Monthly arrays contain January through December in that order.
 | --- | --- | --- |
 | Soiling | `dust_ug_m3_months` | Twelve monthly surface-dust means, µg/m³; not column AOD or total PM10 |
 | Snow | `swe_mm_months` | Twelve monthly-mean ground SWE values, mm water equivalent |
+| Vegetation | `lai_months` | Twelve monthly-mean LAI values, m² leaf/m² ground |
 | Storms / hail | `event_id`, `event_type`, `date`, `hail_diameter_mm` | Unique report IDs, local calendar dates, hail diameter in mm; size missing for wind/lightning |
 
 For your own normalized table, pass a DataFrame directly to `run_environment`.

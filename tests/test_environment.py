@@ -10,6 +10,7 @@ import pytest
 from energyclimates.analysis.environment import run_environment
 from energyclimates.inputs.environment import read_environment, storm_events
 from energyclimates.methods.environment import (
+    population_screen,
     snow_screen,
     soiling_screen,
     storm_report_grid,
@@ -136,6 +137,15 @@ def test_report_grid_wraps_dateline_and_handles_empty_selection():
     empty = storm_report_grid(frame, event_types=["Lightning"], start_year=2020, end_year=2024)
     assert empty.empty
     assert "reported_days_per_year" in empty
+
+
+def test_population_preserves_real_zero_and_missing():
+    frame = pd.DataFrame(
+        {"latitude": [1, 2, 3], "longitude": [1, 2, 3], "population_density_km2": [0, 99, np.nan]}
+    )
+    result = population_screen(frame)
+    np.testing.assert_allclose(result.log10_population_density_plus_one, [0, 2, np.nan])
+    assert not any("count" in column for column in result.columns)
 
 
 def test_snapshot_hash_and_study_export(tmp_path):

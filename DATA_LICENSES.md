@@ -48,6 +48,13 @@ SHA-256 hashes, periods, units, processing and limitations.
 - **NOAA NCEI Storm Events**: filtered 2020–2024 public U.S. event-report archives,
   with original report IDs and dates. Attribute NOAA/NCEI and the National Weather
   Service. https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/ .
+- **CIESIN / NASA SEDAC GPWv4.11 Population Density (2020)**:
+  https://doi.org/10.7927/H49C6VHW . Source GeoTIFF distributed by Stanford's
+  Natural Capital Project; attribution to CIESIN/Columbia University and NASA
+  SEDAC remains with the source dataset. Follow the source dataset's usage terms;
+  this repository adds no exclusive rights. The 0.5° preview is an arithmetic
+  mean of valid densities and must not be used as a population-count raster.
+
 
 The numerical methods and snapshot-building code use the repository's MIT licence.
 No provider endorses these screening indicators.

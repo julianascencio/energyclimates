@@ -14,8 +14,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import rasterio
 import requests
 import xarray as xr
+from rasterio.windows import Window
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -28,6 +30,10 @@ SNOW = (
     "surface_gauss/weasd.sfc.mon.1981-2010.ltm.nc"
 )
 LAND = "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/surface_gauss/land.sfc.gauss.nc"
+POPULATION = (
+    "https://data.naturalcapitalalliance.stanford.edu/download/global/"
+    "ciesin-nasa-gpw-grdi/ciesen_nasa_gpw_v4_population_density_2020.tif"
+)
 STORM_FILES = [
     "StormEvents_details-ftp_v1.0_d2020_c20260323.csv.gz",
     "StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
@@ -252,7 +258,49 @@ def build_storms(cache, output):
     )
 
 
-BUILDERS = {"gmi": build_gmi, "snow": build_snow, "storms": build_storms}
+def build_population(cache, output):
+    """Build the population snapshot from cached or downloaded provider files."""
+    path = cache / "population-2020.tif"
+    source = download(POPULATION, path)
+    # Explicit base-resolution arithmetic means: do not depend on unknown overview kernels.
+    density = np.full((360, 720), np.nan)
+    with rasterio.open(path, overview_level=-1) as ds:
+        if ds.shape != (21600, 43200) or ds.crs.to_epsg() != 4326:
+            raise ValueError("Unexpected population raster geometry")
+        for row in range(360):
+            values = ds.read(1, window=Window(0, row * 60, 43200, 60), masked=True)
+            density[row] = values.reshape(60, 720, 60).mean(axis=(0, 2)).filled(np.nan)
+    yy, xx = np.meshgrid(
+        89.75 - np.arange(360) * 0.5, -179.75 + np.arange(720) * 0.5, indexing="ij"
+    )
+    population = pd.DataFrame(
+        {"latitude": yy.ravel(), "longitude": xx.ravel(), "population_density_km2": density.ravel()}
+    ).dropna()
+    save(
+        output,
+        "population-2020",
+        population,
+        {
+            "provider": "CIESIN / NASA SEDAC GPWv4.11, Stanford Natural Capital Project mirror",
+            "period": "2020 census-based estimate",
+            "sources": [source],
+            "reference": "https://doi.org/10.7927/H49C6VHW",
+            "units": {"population_density_km2": "people/km²"},
+            "grid": {"crs": "EPSG:4326", "resolution_degrees": 0.5},
+            "processing": "Arithmetic mean of valid native 30-arcsecond densities in 60×60 blocks; "
+            "no overview use, no nodata-to-zero, no population totals computed.",
+            "limitations": "Density screening preview, not a land-area-weighted or count-conserving "
+            "aggregate. Small settlements and coastal partial cells need original data.",
+        },
+    )
+
+
+BUILDERS = {
+    "gmi": build_gmi,
+    "snow": build_snow,
+    "storms": build_storms,
+    "population": build_population,
+}
 
 
 def main():

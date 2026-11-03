@@ -87,6 +87,8 @@ def main():
             "examples/environment/snow-1981-2010.metadata.json",
             "examples/environment/storm-reports-2020-2024.parquet",
             "examples/environment/storm-reports-2020-2024.metadata.json",
+            "examples/environment/population-2020.parquet",
+            "examples/environment/population-2020.metadata.json",
             "scripts/build_environment_inputs.py",
             "scripts/check_distribution.py",
             "tests/test_public_workflow.py",

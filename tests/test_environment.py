@@ -68,6 +68,23 @@ def reports():
     )
 
 
+def test_storm_days_deduplicate_and_use_full_declared_record():
+    result = storm_report_grid(
+        reports(), event_types=["Hail"], start_year=2020, end_year=2024, minimum_hail_mm=25.4
+    )
+    assert len(result) == 1  # Unreported bins stay absent, not zero.
+    row = result.iloc[0]
+    assert (row.latitude, row.longitude) == (35.5, -99.5)
+    assert row.reported_events == 3
+    assert row.reported_days == 2
+    assert row.reported_days_per_year == 0.4  # Includes the three years without a report.
+    assert row.maximum_reported_hail_mm == 50.8
+    with pytest.raises(ValueError, match="unique"):
+        storm_report_grid(
+            pd.concat([reports(), reports()]), event_types=["Hail"], start_year=2020, end_year=2024
+        )
+
+
 def test_noaa_adapter_hail_units_sentinels_and_wind():
     frame = pd.DataFrame(
         {
@@ -193,3 +210,11 @@ def test_thunderstorm_study_keeps_wind_and_lightning_separate():
     assert wind.indicators.reported_days_per_year.iloc[0] == 0.4
     assert lightning.indicators.reported_days_per_year.iloc[0] == 0.2
     assert "maximum_reported_hail_mm" not in wind.indicators
+
+
+def test_hail_study_records_threshold_and_excludes_missing_size():
+    study = run_environment(reports(), "hail", start_year=2020, end_year=2024)
+    assert study.manifest["parameters"]["minimum_hail_mm"] == 25.4
+    assert study.indicators.reported_days_per_year.iloc[0] == 0.4
+    large = run_environment(reports(), "hail", start_year=2020, end_year=2024, minimum_hail_mm=50.8)
+    assert large.indicators.reported_days_per_year.iloc[0] == 0.2

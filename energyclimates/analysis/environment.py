@@ -12,6 +12,7 @@ from energyclimates.methods.environment import (
     snow_screen,
     soiling_screen,
     storm_report_grid,
+    vegetation_screen,
 )
 
 METHODS = {
@@ -24,6 +25,11 @@ METHODS = {
         snow_screen,
         {"threshold_mm": 1.0, "days": DAYS.tolist()},
         "Ground monthly-mean SWE exposure, not module snow cover or PV loss.",
+    ),
+    "vegetation": (
+        vegetation_screen,
+        {"days": DAYS.tolist()},
+        "Model leaf-area index, not land cover, tree height or shading.",
     ),
     "thunderstorm": (
         storm_report_grid,
@@ -48,6 +54,8 @@ OUTPUT_UNITS = {
     "mean_swe_mm": "mm water equivalent",
     "peak_month_swe_mm": "mm water equivalent",
     "months_mean_swe_above_threshold": "months",
+    "mean_lai": "m² leaf/m² ground",
+    "seasonal_lai_range": "m² leaf/m² ground",
     "reported_events": "reports",
     "reported_days": "distinct local calendar dates",
     "reported_days_per_year": "distinct local calendar dates/year",

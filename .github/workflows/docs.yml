@@ -33,8 +33,23 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      # Enable Pages once in Settings > Pages > Source: GitHub Actions.
+      # GITHUB_TOKEN cannot create the Pages site, even with pages: write.
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        id: pages
+      - name: Explain Pages setup failure
+        if: failure() && steps.pages.outcome == 'failure'
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ### GitHub Pages configuration failed
+
+          The documentation build succeeded, but Pages could not be configured.
+          Check the error in **Configure GitHub Pages** above. If Pages is not
+          enabled, open [Settings → Pages](https://github.com/julianascencio/energyclimates/settings/pages)
+          and select **GitHub Actions** under **Build and deployment → Source**.
+          Then rerun the failed deployment job. The standard `GITHUB_TOKEN`
+          can deploy an existing Pages site, but cannot enable it for the first time.
+          EOF
       - uses: actions/deploy-pages@v4
         id: deployment

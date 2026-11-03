@@ -23,11 +23,25 @@ The `Documentation` workflow builds on pull requests and publishes only pushes t
 `main` or a manual run on `main`. It runs every gallery example and treats Sphinx
 warnings as errors, then copies/rebuilds the atlas under `atlas/`.
 
-In repository **Settings → Pages**, choose **GitHub Actions** as the build source.
-The repository initially had Pages disabled; adding a workflow alone does not
-claim the site is already live. The deployment job uses `configure-pages` with
-`enablement: true`; if GitHub requires repository administration for first-time
-setup, select that setting manually and rerun the workflow.
+Before the first deployment, a repository administrator must enable Pages:
+
+1. Open [Settings → Pages](https://github.com/julianascencio/energyclimates/settings/pages).
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+3. Open the failed **Documentation** workflow run and choose **Re-run failed jobs**,
+   or run **Documentation → Run workflow** on `main`.
+
+The standard `GITHUB_TOKEN` can deploy to an existing Pages site with the workflow's
+`pages: write` and `id-token: write` permissions. It cannot create the site for the
+first time. Setting `enablement: true` in `configure-pages` does not change that:
+it requires a separate token with additional permissions. This workflow deliberately
+uses the standard token and the one-time repository setting, with no extra secret.
+See the [configure-pages inputs](https://github.com/actions/configure-pages#inputs).
+
+If the build passes but deployment reports `Get Pages site failed: Not Found` or
+`Create Pages site failed: Resource not accessible by integration`, check the Pages
+source setting first. Do not rerun the build repeatedly or broaden workflow token
+permissions to try to enable Pages. A successful build alone does not mean the site
+is live; confirm that the deployment job succeeds and the URL below loads.
 
 Expected site: <https://julianascencio.github.io/energyclimates/>.
 

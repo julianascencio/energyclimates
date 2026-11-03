@@ -1,55 +1,69 @@
-# Thunderstorms: reported wind and lightning exposure
+# Global thunderstorm screening with lightning
 
-{doc}`Run this map <auto_examples/plot_15_map_thunderstorm>`
+{doc}`Run the global map <auto_examples/plot_15_map_thunderstorm>`
 
-| Example | Input | Output |
-| --- | --- | --- |
-| {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | NOAA NCEI U.S. Thunderstorm Wind and Lightning reports, 2020–2024 | Distinct local report dates/year in 1° bins; separate wind and lightning maps |
+The gallery now covers the whole world using **WGLC lightning stroke density**
+from 2012–2021. It replaces the U.S.-only report-count figure with a global
+climatology. The two panels show annualized strokes/km² and peak monthly
+strokes/km²/day. A square-root colour scale reveals low densities without
+changing the exported numbers; real zeros are included.
 
-## Method and interpretation
+## Inputs and method
 
-The method uses the event's **BEGIN** point and local calendar date, bins the
-point into an explicitly declared grid and counts unique dates. Multiple events
-on the same day in one cell count as one report day. Divide by the declared
-inclusive record length, **five years**, including years without a matching
-report. Event counts remain available separately.
+The pinned [WGLC 2022 release](https://doi.org/10.5281/zenodo.6007052) supplies
+monthly daily-density climatology fields on a global 0.5° grid for 2012–2021,
+as stated in the NetCDF title and the 2022 paper. The catalogue description
+still references the older time series; it is not the climatology period.
+Four native cells are averaged into each 1° cell with spherical-area weights
+proportional to cos(latitude). All twelve months and all four spatial cells
+are required; missing values remain missing. The original monthly densities
+are retained in the bundled input for alternative seasonal analyses.
 
-Thunderstorm wind and lightning are analyzed separately.
-NOAA Storm Events is a U.S. inventory of significant/damaging weather reports,
-with population, observation and reporting biases. It is not a worldwide storm
-climatology. The maps display the contiguous-U.S. rectangle; the CSVs retain
-qualifying reports elsewhere in the U.S. **Unreported cells stay absent** and
-are not evidence of zero hazard. No annual probability, return period, lightning
-flash density, hail kinetic energy or PV damage is inferred. Records cover only
-2020–2024 and should not be treated as a long-term climate normal.
+`lightning_screen` then calculates:
+
+- Annualized density = sum of monthly daily densities × month lengths in a
+  **365-day climatological year**, in strokes/km²/year.
+- Peak monthly daily density = maximum of the twelve monthly means, in
+  strokes/km²/day.
+
+This is lightning activity, **not thunderstorm counts, flash counts, damaging
+wind reports, ground-strike probability or PV loss**. WWLLN detection efficiency
+varies geographically and temporally, despite correction, and weak strokes
+may be missed. These are historical screening data, not a current forecast.
 
 ## Run and export
 
-The bundled snapshot runs offline from a repository checkout.
-
 ```bash
-python -m pip install -e '.[examples]'
 python examples/gallery/plot_15_map_thunderstorm.py
 ```
 
 ```python
 from energyclimates.analysis.environment import run_environment
 
-study = run_environment("examples/environment/storm-reports-2020-2024.parquet", "thunderstorm", start_year=2020, end_year=2024)
-study.write("results/thunderstorm")
+study = run_environment("examples/environment/global-lightning-2012-2021.parquet", "global_lightning")
+study.write("results/global-lightning")
 ```
 
-The export retains numerical indicators, units, assumptions and source checksums.
-See [input contracts and batch downloads](environment-maps.md) for shared APIs.
+The snapshot runs offline. See [input contracts and downloads](environment-maps.md).
+The U.S. NOAA snapshot and `kind="thunderstorm"` API remain available for reported
+wind/lightning studies; their coverage has not been relabelled as global.
 
-## Sources and optional refresh
+## Attribution and rebuild
 
-- [NOAA Storm Events bulk archive](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/)
-  and [field definitions](https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/Storm-Data-Bulk-csv-Format.pdf).
-  Exact annual revision filenames are pinned in the builder and metadata.
+- Kaplan, J. O. and Lau, K. H.-K. (2021),
+  [The WGLC global gridded lightning climatology and time series](https://doi.org/10.5194/essd-13-3219-2021).
+- Kaplan and Lau (2022),
+  [WGLC, 2022 update](https://doi.org/10.5194/essd-14-5665-2022).
+- WGLC / WWLLN, 2022 release, doi:10.5281/zenodo.6007052.
+  Follow the provider LICENSE's **CC BY-SA 4.0** terms. The derived snapshot,
+  numerical results and map figures are distributed under
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); retain attribution
+  and identify these temporal/spatial aggregations as modifications. Software
+  remains MIT-licensed.
 
 ```bash
-python scripts/build_environment_inputs.py --dataset storms
+python scripts/build_global_lightning_input.py
 ```
 
-Refresh is explicit; tests and gallery builds never download provider data.
+This optional command downloads about 26 MB. Gallery builds never download data.
+Exact source URL, SHA-256, processing, units and licence accompany the snapshot.

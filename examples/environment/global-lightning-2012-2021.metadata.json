@@ -1,0 +1,33 @@
+{
+  "title": "WGLC global monthly lightning stroke density, 2012\u20132021",
+  "period": "2012-01-01/2021-12-31",
+  "sources": [
+    {
+      "url": "https://zenodo.org/api/records/6007052/files/wglc_climatology_30m.nc/content",
+      "sha256": "b5f36f097b659025f4b5e483093e60b99d6d66286da8823778fffbff3ad0fc92",
+      "bytes": 25633056
+    }
+  ],
+  "citation": "Kaplan and Lau (2021, 2022); WGLC 2022 release, doi:10.5281/zenodo.6007052",
+  "license": "CC BY-SA 4.0, following the provider LICENSE; applies to this derived snapshot and its data products.",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "units": {
+    "lightning_strokes_km2_day_months": "strokes/km\u00b2/day, January\u2013December"
+  },
+  "processing": "Provider monthly daily-density climatology for 2012\u20132021; 2\u00d72 spherical-area-weighted means of native 0.5\u00b0 cells to 1\u00b0; no interpolation.",
+  "missing_data": "All twelve climatological months and all four spatial cells required; NaN stays missing; source zeros retained.",
+  "limitations": "Detection-efficiency-corrected WWLLN strokes, not flashes, thunderstorm counts or wind reports. Detection varies geographically and through time; weak strokes can be missed.",
+  "grid": {
+    "type": "regular",
+    "resolution_degrees": 1,
+    "bounds": [
+      -180,
+      180,
+      -90,
+      90
+    ]
+  },
+  "schema": "energyclimates-environment-input-v1",
+  "sha256": "3201ac47a10421ea4cd2326762aed6e21f4eb3652a2ba93ac60521cb683f0860",
+  "rows": 64800
+}

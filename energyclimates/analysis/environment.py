@@ -9,6 +9,7 @@ import pandas as pd
 from energyclimates.inputs.environment import read_environment
 from energyclimates.methods.environment import (
     DAYS,
+    snow_screen,
     soiling_screen,
 )
 
@@ -17,6 +18,11 @@ METHODS = {
         soiling_screen,
         {"deposition_velocity_m_s": 0.001, "tilt_degrees": 30, "days": DAYS.tolist()},
         "Dust-only dry deposition scenario; no rain, cleaning or PV loss model.",
+    ),
+    "snow": (
+        snow_screen,
+        {"threshold_mm": 1.0, "days": DAYS.tolist()},
+        "Ground monthly-mean SWE exposure, not module snow cover or PV loss.",
     ),
 }
 
@@ -28,6 +34,9 @@ OUTPUT_UNITS = {
     "mean_dust_ug_m3": "µg/m³",
     "dry_deposition_g_m2_day": "g/m²/day",
     "peak_month_deposition_g_m2_day": "g/m²/day",
+    "mean_swe_mm": "mm water equivalent",
+    "peak_month_swe_mm": "mm water equivalent",
+    "months_mean_swe_above_threshold": "months",
 }
 
 

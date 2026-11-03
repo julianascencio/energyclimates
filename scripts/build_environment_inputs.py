@@ -21,6 +21,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 GMI = "https://opendap.nccs.nasa.gov/dods/merra2_gmi/"
+SNOW = (
+    "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/"
+    "surface_gauss/weasd.sfc.mon.1981-2010.ltm.nc"
+)
+LAND = "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/surface_gauss/land.sfc.gauss.nc"
 
 
 def checksum(path):
@@ -155,7 +160,49 @@ def build_gmi(cache, output):
     )
 
 
-BUILDERS = {"gmi": build_gmi}
+def build_snow(cache, output):
+    """Build the snow snapshot from cached or downloaded provider files."""
+    path = cache / "snow-1981-2010.nc"
+    source = download(SNOW, path)
+    land_path = cache / "land.sfc.gauss.nc"
+    land_source = download(LAND, land_path)
+    with xr.open_dataset(land_path, decode_times=False) as land_ds:
+        land_mask = land_ds.land.values[0] == 1
+        land_lat, land_lon = land_ds.lat.values, land_ds.lon.values
+    with xr.open_dataset(path, decode_times=False) as ds:
+        if not (np.array_equal(ds.lat, land_lat) and np.array_equal(ds.lon, land_lon)):
+            raise ValueError("NCEP land mask and snow grid do not align")
+        if ds.weasd.attrs["units"] != "kg/m^2" or ds.weasd.shape != (12, 94, 192):
+            raise ValueError("Unexpected NCEP snow contract")
+        snow = ds.weasd.values.copy()
+        snow[ds.valid_yr_count.values < 30] = np.nan
+        lon = (ds.lon.values.astype(float) + 180) % 360 - 180
+        lat = ds.lat.values.astype(float)
+    save(
+        output,
+        "snow-1981-2010",
+        monthly_table(lat, lon, swe_mm_months=snow).loc[land_mask.ravel()].reset_index(drop=True),
+        {
+            "provider": "NOAA PSL NCEP/NCAR Reanalysis 1",
+            "period": "1981–2010 climatology",
+            "sources": [source, land_source],
+            "units": {"swe_mm_months": "mm water equivalent"},
+            "grid": {
+                "crs": "EPSG:4326",
+                "latitude": sorted(lat.tolist()),
+                "longitude": sorted(lon.tolist()),
+                "native_grid": "94 × 192 Gaussian",
+            },
+            "processing": "1 kg/m² SWE = 1 mm water; retain only months with all 30 years; "
+            "wrap longitude without resampling; retain NCEP static land-mask cells only.",
+            "limitations": "Coarse modeled ground SWE. Ice sheets may have very large values; "
+            "ocean/sea-ice cells excluded by the native static land mask. "
+            "No module snow, daily cover or PV loss.",
+        },
+    )
+
+
+BUILDERS = {"gmi": build_gmi, "snow": build_snow}
 
 
 def main():

@@ -18,6 +18,13 @@ def main():
     # Prevent overwriting any source directory when staging the atlas.
     if output.is_relative_to(root) and not output.is_relative_to(root / "docs/_build"):
         parser.error("Repository-local output must be below docs/_build")
+    # Build downloadable results from the same scripts executed by Sphinx Gallery.
+    subprocess.run(
+        [sys.executable, str(root / "scripts/run_map_gallery.py"),
+         "--output", str(root / "docs/_generated/map-results"),
+         "--archive", str(root / "docs/_generated/map-results.zip")],
+        cwd=root, check=True,
+    )
     subprocess.run(
         [
             sys.executable,

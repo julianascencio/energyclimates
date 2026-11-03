@@ -21,6 +21,7 @@ atlas/data/*.png
 atlas/downloads/*.zip
 
 docs/_build/
+docs/_generated/
 docs/auto_examples/
 docs/sg_execution_times.rst
 examples/gallery/*.ipynb

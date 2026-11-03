@@ -29,6 +29,12 @@ Analysis
    :members:
    :undoc-members:
 
+Mapping
+-------
+
+.. automodule:: energyclimates.analysis.maps
+   :members:
+
 Compatibility
 -------------
 

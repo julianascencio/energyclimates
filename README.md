@@ -156,7 +156,21 @@ separate measured or consistently simulated target; no real operational outcome
 has yet validated the new classifications.
 
 The [gallery](examples/gallery/) includes input inspection, real-cell profiles,
-KGPV, missing-data behavior, ML prediction and a complete study export.
+KGPV, missing-data behavior, ML prediction and a complete study export. Six further
+studies produce **13 global and regional map panels**: solar resource, seasonality,
+PV/hybrid/BESS profiles, Chile, Europe and ML groups, using the bundled 67,420-cell
+CRU/ERA5 snapshot. They run offline and retain the original 0.5° cells.
+
+```bash
+python -m pip install -e '.[examples]'
+python scripts/run_map_gallery.py --output results/map-gallery \
+  --archive results/map-gallery.zip
+```
+
+The [map guide](https://julianascencio.github.io/energyclimates/map-examples.html)
+provides the executed PNG/SVG/CSV result download and reproducibility instructions.
+The runner exports figures, nine numeric tables and input/code/output checksums;
+the documentation workflow rebuilds the results on every deployment.
 
 ## Documentation and atlas
 

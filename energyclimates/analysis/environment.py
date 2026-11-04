@@ -9,6 +9,7 @@ import pandas as pd
 from energyclimates.inputs.environment import read_environment
 from energyclimates.methods.environment import (
     DAYS,
+    lightning_screen,
     population_screen,
     snow_screen,
     soiling_screen,
@@ -17,6 +18,11 @@ from energyclimates.methods.environment import (
 )
 
 METHODS = {
+    "global_lightning": (
+        lightning_screen,
+        {"days": DAYS.tolist()},
+        "Global lightning stroke-density climatology; not flashes, storm days, wind damage or PV loss.",
+    ),
     "soiling": (
         soiling_screen,
         {"deposition_velocity_m_s": 0.001, "tilt_degrees": 30, "days": DAYS.tolist()},
@@ -54,6 +60,8 @@ OUTPUT_UNITS = {
     "latitude": "degrees_north",
     "longitude": "degrees_east",
     "valid_months": "months",
+    "annualized_strokes_km2": "strokes/km²/climatological year",
+    "peak_month_strokes_km2_day": "strokes/km²/day",
     "mean_dust_ug_m3": "µg/m³",
     "dry_deposition_g_m2_day": "g/m²/day",
     "peak_month_deposition_g_m2_day": "g/m²/day",

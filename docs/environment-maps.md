@@ -20,7 +20,7 @@ environment-population
 | --- | --- | --- |
 | {doc}`Soiling <auto_examples/plot_13_map_soiling>` | NASA MERRA-2 GMI modeled monthly surface dust, 2019; sampled land cells | Day-weighted dust concentration and an explicit dry-deposition scenario, g/m²/day |
 | {doc}`Snow <auto_examples/plot_14_map_snow>` | NOAA NCEP/NCAR Reanalysis 1 ground snow-water equivalent, 1981–2010 | Months with monthly-mean SWE ≥1 mm, mean and peak monthly SWE |
-| {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | NOAA NCEI U.S. Thunderstorm Wind and Lightning reports, 2020–2024 | Distinct local report dates/year in 1° bins; separate wind and lightning maps |
+| {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | WGLC / WWLLN global lightning stroke density, 2012–2021 | Annualized strokes/km² and peak monthly strokes/km²/day; 1° area means |
 | {doc}`Hail <auto_examples/plot_16_map_hail>` | NOAA NCEI U.S. hail reports and diameters, 2020–2024 | Report days/year for hail ≥25.4 mm and largest reported diameter per 1° bin |
 | {doc}`Vegetation <auto_examples/plot_17_map_vegetation>` | NASA MERRA-2 GMI model monthly leaf-area index, 2019 | Day-weighted mean LAI and seasonal range, m² leaf/m² ground |
 | {doc}`Population <auto_examples/plot_18_map_population>` | CIESIN / NASA SEDAC GPWv4.11 2020 density via Stanford's mirror | 0.5° arithmetic density preview and log10(1+density), preserving real zeros |
@@ -37,7 +37,8 @@ WGS84 degrees. Monthly arrays contain January through December in that order.
 | Soiling | `dust_ug_m3_months` | Twelve monthly surface-dust means, µg/m³; not column AOD or total PM10 |
 | Snow | `swe_mm_months` | Twelve monthly-mean ground SWE values, mm water equivalent |
 | Vegetation | `lai_months` | Twelve monthly-mean LAI values, m² leaf/m² ground |
-| Storms / hail | `event_id`, `event_type`, `date`, `hail_diameter_mm` | Unique report IDs, local calendar dates, hail diameter in mm; size missing for wind/lightning |
+| Global lightning | `lightning_strokes_km2_day_months` | Twelve monthly daily densities, strokes/km²/day |
+| U.S. reports (legacy API) | `event_id`, `event_type`, `date`, `hail_diameter_mm` | Unique report IDs, local calendar dates, hail diameter in mm; size missing for wind/lightning |
 | Population | `population_density_km2` | People/km²; missing is distinct from zero |
 
 For your own normalized table, pass a DataFrame directly to `run_environment`.

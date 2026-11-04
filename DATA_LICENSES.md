@@ -66,3 +66,11 @@ and Holland (2018), PANGAEA V2, https://doi.org/10.1594/PANGAEA.893160, licensed
 CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/). The derived snapshot
 sums 365 daily fractions, sorts native longitude centres and preserves missing
 values. Cite the dataset and https://doi.org/10.1016/j.wace.2018.10.004.
+
+- **WGLC / WWLLN global lightning**: Kaplan and Lau (2021, 2022),
+  doi:10.5194/essd-13-3219-2021 and doi:10.5194/essd-14-5665-2022;
+  2022 release https://doi.org/10.5281/zenodo.6007052 . Follow the provider
+  LICENSE’s CC BY-SA 4.0 terms (the catalogue licence field differs). The derived
+  `global-lightning-2012-2021.parquet`, numerical exports and lightning map
+  figures are CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ .
+  Changes: 1° spherical-area means of monthly climatological densities; annualization to a 365-day year. Retain attribution and these changes.

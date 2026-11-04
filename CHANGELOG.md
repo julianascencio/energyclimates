@@ -1,5 +1,9 @@
 # Changes
 
+## Global storm maps
+
+- Replace the U.S.-only thunderstorm gallery figure with global WGLC lightning activity; retain the NOAA report API.
+
 ## Environmental map gallery
 
 - Add an offline soiling map with source provenance, methods and analysis exports.

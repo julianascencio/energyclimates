@@ -236,3 +236,63 @@ def test_hail_study_records_threshold_and_excludes_missing_size():
     assert study.indicators.reported_days_per_year.iloc[0] == 0.4
     large = run_environment(reports(), "hail", start_year=2020, end_year=2024, minimum_hail_mm=50.8)
     assert large.indicators.reported_days_per_year.iloc[0] == 0.2
+
+
+def test_lightning_annualizes_daily_rates_and_preserves_missing():
+    from energyclimates.methods.environment import lightning_screen
+
+    name = "lightning_strokes_km2_day_months"
+    result = lightning_screen(monthly(name, [2.0] * 12))
+    assert result.annualized_strokes_km2.iloc[0] == 730
+    assert result.peak_month_strokes_km2_day.iloc[0] == 2
+    january = lightning_screen(monthly(name, [1] + [0] * 11))
+    assert january.annualized_strokes_km2.iloc[0] == 31
+    assert lightning_screen(monthly(name, [0] * 12)).annualized_strokes_km2.iloc[0] == 0
+    missing = lightning_screen(monthly(name, [1] * 11 + [np.nan]))
+    assert np.isnan(missing.annualized_strokes_km2.iloc[0])
+    with pytest.raises(ValueError, match="physical range"):
+        lightning_screen(monthly(name, [-1] * 12))
+    with pytest.raises(ValueError, match="month lengths"):
+        lightning_screen(monthly(name, [1] * 12), days=[1] * 11)
+
+
+def test_lightning_coarsening_uses_area_weights_and_preserves_gaps():
+    import importlib.util
+    import sys
+
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "scripts"))
+    try:
+        spec = importlib.util.spec_from_file_location(
+            "build_lightning", root / "scripts/build_global_lightning_input.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        values = np.array([[10.0, 10, 0, 0], [2.0, 2, 0, 0]])
+        result = module.coarsen_density(values, [-60, -30])
+        expected = (10 * np.cos(np.pi / 3) + 2 * np.cos(np.pi / 6)) / (
+            np.cos(np.pi / 3) + np.cos(np.pi / 6)
+        )
+        np.testing.assert_allclose(result, [[expected, 0]])
+        values[0, 0] = np.nan
+        assert np.isnan(module.coarsen_density(values, [-60, -30])[0, 0])
+    finally:
+        sys.path.pop(0)
+
+
+def test_global_lightning_snapshot_reaches_all_longitudes_and_hemispheres():
+    root = Path(__file__).resolve().parents[1]
+    frame = read_environment(root / "examples/environment/global-lightning-2012-2021.parquet")
+    assert len(frame) == 180 * 360
+    assert frame.latitude.min() == -89.5 and frame.latitude.max() == 89.5
+    assert frame.longitude.min() == -179.5 and frame.longitude.max() == 179.5
+    study = run_environment(frame, "global_lightning")
+    for south, north, west, east in [
+        (-35, 35, -15, 45),
+        (-40, 5, 110, 155),
+        (-35, 10, -80, -35),
+        (5, 50, 65, 145),
+    ]:
+        region = study.indicators.query("@south < latitude < @north and @west < longitude < @east")
+        assert region.annualized_strokes_km2.max() > 0
+    assert study.manifest["input"]["period"] == "2012-01-01/2021-12-31"

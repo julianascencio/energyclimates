@@ -33,6 +33,22 @@ def _weights(days):
     return weights / weights.sum()
 
 
+def lightning_screen(frame, *, days=DAYS):
+    """Annualized stroke density from monthly daily means, not flash/storm counts.
+
+    Multiply each monthly density (strokes/km²/day) by its declared month
+    length, then sum. The default represents a 365-day climatological year.
+    All twelve months must be valid; zero observations remain zero.
+    """
+    values, valid, count = _monthly(frame, "lightning_strokes_km2_day_months")
+    _weights(days)  # Validate lengths without normalizing the annual total.
+    result = _base(frame)
+    result["valid_months"] = count
+    result["annualized_strokes_km2"] = np.where(valid, values @ np.asarray(days), np.nan)
+    result["peak_month_strokes_km2_day"] = np.where(valid, values.max(axis=1), np.nan)
+    return result
+
+
 def soiling_screen(frame, *, deposition_velocity_m_s=0.001, tilt_degrees=30, days=DAYS):
     """Dust-only dry deposition potential from monthly dust in micrograms/m³.
 

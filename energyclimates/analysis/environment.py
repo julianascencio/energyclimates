@@ -15,7 +15,6 @@ from energyclimates.methods.environment import (
     storm_report_grid,
     vegetation_screen,
 )
-
 from energyclimates.methods.hail import hail_probability_screen
 
 METHODS = {

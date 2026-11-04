@@ -16,6 +16,7 @@ from energyclimates.methods.environment import (
     storm_report_grid,
     vegetation_screen,
 )
+from energyclimates.methods.hail import hail_probability_screen
 
 METHODS = {
     "global_lightning": (
@@ -48,6 +49,11 @@ METHODS = {
         {"event_types": ["Thunderstorm Wind", "Lightning"], "resolution": 1.0},
         "Reported damaging/significant U.S. events, not all thunderstorms or probability.",
     ),
+    "global_hail": (
+        hail_probability_screen,
+        {"n_days": 365},
+        "Single modeled year of large hail >2.5 cm; not annual probability, climatology or PV damage.",
+    ),
     "hail": (
         storm_report_grid,
         {"event_types": ["Hail"], "resolution": 1.0, "minimum_hail_mm": 25.4},
@@ -76,6 +82,8 @@ OUTPUT_UNITS = {
     "reported_days": "distinct local calendar dates",
     "reported_days_per_year": "distinct local calendar dates/year",
     "maximum_reported_hail_mm": "mm",
+    "modeled_hail_day_equivalents": "sum of daily probability fractions (days)",
+    "mean_daily_hail_probability": "fraction",
 }
 
 
@@ -118,7 +126,7 @@ def run_environment(source, kind, **parameters):
         "method": function.__name__,
         "parameters": options,
         "output_units": {column: OUTPUT_UNITS[column] for column in indicators.columns},
-        "missing_data": "Incomplete monthly series stay missing; unreported event cells stay absent.",
+        "missing_data": "Incomplete monthly or daily series stay missing; unreported event cells stay absent.",
         "limitations": limitations,
     }
     indicators.attrs = manifest

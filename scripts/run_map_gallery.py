@@ -52,6 +52,7 @@ def main():
             "scripts/run_map_gallery.py",
             "energyclimates/inputs/environment.py",
             "energyclimates/methods/environment.py",
+            "energyclimates/methods/hail.py",
             "energyclimates/analysis/environment.py",
         )
     ]

@@ -1,81 +1,82 @@
 """
-Hail risk screening from reported size and frequency
-====================================================
+Global modeled large-hail activity in 2015
+============================================================
 
-Input: NOAA NCEI Storm Events Hail reports, 2020–2024, with unique event IDs,
-BEGIN coordinates, local dates and reported diameter. Inches convert to mm
-using exactly 25.4; missing size is not treated as zero.
+Input: Prein and Holland (2018), PANGAEA V2 daily large-hail probabilities for
+2015 on the native 256 × 512 Gaussian/longitude grid. Hail means diameter
+>2.5 cm. The V2 catalogue defines fractions from zero to one, overriding the
+misleading percent attribute in the NetCDF file.
 
-Method: select reported diameter ≥ 25.4 mm, group into 1° cells, count distinct
-local report dates per five-year period and retain the maximum reported size.
-The maps display a contiguous-U.S. rectangle; exports retain all qualifying
-U.S. reports. Cells without qualifying reports remain absent.
+Method: sum all 365 daily probabilities. This is a modeled hail-day-equivalent
+indicator, not the probability of hail occurring at least once during the year.
+The second panel divides by 365 to show mean daily probability. No independent-
+day assumption or spatial interpolation is used. Missing days propagate.
 
-Analysis: frequent report days and large reported sizes identify locations for
-further investigation. Population/reporting bias and the short record prevent
-return-period, exceedance-probability or module-damage claims. A single maximum
-is not a design hailstone size. Grey is not evidence of safety.
+Analysis: this is ONE modeled year, not a climatology, observed event count,
+return period, design hail size or PV damage estimate. Environmental-proxy
+calibration and geographic biases limit site-level use. Source zeros stay zero;
+missing values are grey. The original U.S. report method remains available as
+``run_environment(..., "hail", start_year=2020, end_year=2024)``.
 
-See :doc:`/environment-maps` for input contracts, equations, source URLs and
-refresh instructions. Run this script offline from an installed checkout; the
-batch runner exports figures, tables, assumptions and input checksums.
+Derived data: CC BY 3.0, Prein and Holland (2018). Dataset:
+https://doi.org/10.1594/PANGAEA.893160. Paper:
+https://doi.org/10.1016/j.wace.2018.10.004.
+See :doc:`/environment-hail` for reproducible inputs, units and limitations.
+This example runs offline and exports numerical results with provenance.
 """
 
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.colors import PowerNorm
 
 from energyclimates.analysis.environment import run_environment
-from energyclimates.analysis.maps import plot_grid_map
+from energyclimates.analysis.maps import plot_rectilinear_map
 from energyclimates.inputs.environment import read_environment
 
 start = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
 root = next(p for p in (start, *start.parents) if (p / "examples/environment").is_dir())
 input_files = [
-    root / "examples/environment/storm-reports-2020-2024.parquet",
-    root / "examples/environment/storm-reports-2020-2024.metadata.json",
+    root / "examples/environment/global-hail-2015.parquet",
+    root / "examples/environment/global-hail-2015.metadata.json",
 ]
 features = read_environment(input_files[0])
-study = run_environment(features, "hail", start_year=2020, end_year=2024)
-frames = [study.indicators, study.indicators]
+study = run_environment(features, "global_hail")
 result_tables = {"hail": study.indicators}
 map_context = study.manifest
 map_grid = features.attrs["grid"].copy()
-map_grid.update(
-    display="equirectangular", interpolation="none", grey_background="No supplied value"
-)
-fig, axes = plt.subplots(2, 1, figsize=(12, 10), layout="constrained")
-fig.get_layout_engine().set(h_pad=0.14, hspace=0.08)
+map_grid.update(display="equirectangular", interpolation="none", view_bounds=[-180, 180, -90, 90])
+fig, axes = plt.subplots(2, 1, figsize=(12, 12), layout="constrained")
 panels = [
     (
-        "reported_days_per_year",
-        "Hail ≥ 25.4 mm: report days",
-        "distinct local dates/year",
-        "YlOrRd",
+        "modeled_hail_day_equivalents",
+        "Sum of daily large-hail probabilities",
+        "modeled day equivalents",
     ),
-    ("maximum_reported_hail_mm", "Largest reported hail diameter", "mm", "magma"),
+    ("mean_daily_hail_probability", "Mean daily large-hail probability", "fraction (0–1)"),
 ]
-for index, (ax, frame, (column, title, unit, palette)) in enumerate(zip(axes, frames, panels)):
-    settings = {"ax": ax, "title": title, "cmap": palette}
-    image = plot_grid_map(frame, column, resolution=1, bounds=(-125, -66, 24, 50), **settings)
-    map_grid.update(
-        resolution_degrees=1,
-        view_bounds=[-125, -66, 24, 50],
-        grey_background="No qualifying report; not zero hazard",
+for ax, (column, title, unit) in zip(axes, panels):
+    image = plot_rectilinear_map(
+        study.indicators,
+        column,
+        latitude=map_grid["latitude"],
+        longitude=map_grid["longitude"],
+        bounds=(-180, 180, -90, 90),
+        ax=ax,
+        title=title,
+        cmap="YlOrRd",
+        norm=PowerNorm(gamma=0.5, vmin=0, vmax=study.indicators[column].max()),
     )
-    fig.colorbar(image, ax=ax, label=unit, shrink=0.75, pad=0.02, extend="neither")
+    fig.colorbar(image, ax=ax, label=unit + " · square-root colour scale", shrink=0.7, pad=0.02)
 fig.suptitle(
-    "Hail risk screening from reported size and frequency\nNOAA NCEI Storm Events · 2020–2024 · reported hail ≥ 25.4 mm",
+    "Global modeled large-hail activity · 2015 only\nPrein & Holland (2018), PANGAEA V2 · hail >2.5 cm",
     fontsize=14,
 )
-for name, table in result_tables.items():
-    print(f"{name}: {len(table):,} output rows")
-    print(
-        table.select_dtypes(include="number")
-        .drop(columns=["latitude", "longitude"])
-        .agg(["min", "median", "max"])
-        .round(4)
-        .to_string()
-    )
+print(f"hail: {len(study.indicators):,} output rows")
+print(
+    study.indicators.drop(columns=["latitude", "longitude"])
+    .agg(["min", "median", "max"])
+    .to_string()
+)
 print("Limitations:", study.manifest["limitations"])
 plt.show()

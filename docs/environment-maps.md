@@ -21,7 +21,7 @@ environment-population
 | {doc}`Soiling <auto_examples/plot_13_map_soiling>` | NASA MERRA-2 GMI modeled monthly surface dust, 2019; sampled land cells | Day-weighted dust concentration and an explicit dry-deposition scenario, g/m²/day |
 | {doc}`Snow <auto_examples/plot_14_map_snow>` | NOAA NCEP/NCAR Reanalysis 1 ground snow-water equivalent, 1981–2010 | Months with monthly-mean SWE ≥1 mm, mean and peak monthly SWE |
 | {doc}`Thunderstorms <auto_examples/plot_15_map_thunderstorm>` | NOAA NCEI U.S. Thunderstorm Wind and Lightning reports, 2020–2024 | Distinct local report dates/year in 1° bins; separate wind and lightning maps |
-| {doc}`Hail <auto_examples/plot_16_map_hail>` | NOAA NCEI U.S. hail reports and diameters, 2020–2024 | Report days/year for hail ≥25.4 mm and largest reported diameter per 1° bin |
+| {doc}`Hail <auto_examples/plot_16_map_hail>` | Prein and Holland PANGAEA V2 global daily probabilities, 2015 only | Sum of daily probabilities and mean daily fraction on native axes; hail >2.5 cm |
 | {doc}`Vegetation <auto_examples/plot_17_map_vegetation>` | NASA MERRA-2 GMI model monthly leaf-area index, 2019 | Day-weighted mean LAI and seasonal range, m² leaf/m² ground |
 | {doc}`Population <auto_examples/plot_18_map_population>` | CIESIN / NASA SEDAC GPWv4.11 2020 density via Stanford's mirror | 0.5° arithmetic density preview and log10(1+density), preserving real zeros |
 
@@ -67,3 +67,6 @@ manifests. The snapshots ship in the source archive, not the wheel. Missing cell
 stay missing; display limits never clip CSV values. Native source axes preserve
 grid gaps and dateline cells without interpolation. See each map's page for units,
 limitations and its independently selectable input-refresh command.
+
+Global hail inputs use `sum_daily_hail_probability`: the complete 2015 sum of daily
+0–1 fractions. See {doc}`environment-hail` for source-unit handling and limitations.

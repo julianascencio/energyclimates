@@ -58,3 +58,11 @@ SHA-256 hashes, periods, units, processing and limitations.
 
 The numerical methods and snapshot-building code use the repository's MIT licence.
 No provider endorses these screening indicators.
+
+## Global hail 2015 snapshot
+
+`examples/environment/global-hail-2015.*` and derived figures/tables use Prein
+and Holland (2018), PANGAEA V2, https://doi.org/10.1594/PANGAEA.893160, licensed
+CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/). The derived snapshot
+sums 365 daily fractions, sorts native longitude centres and preserves missing
+values. Cite the dataset and https://doi.org/10.1016/j.wace.2018.10.004.

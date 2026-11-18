@@ -93,6 +93,10 @@ def parser():
     s.add_argument("--title", required=True)
     s.add_argument("--source", required=True)
     s.add_argument("--period")
+    s = sub.add_parser("rustgis", help="Export selected atlas GeoTIFFs to a portable RustGIS project")
+    s.add_argument("layers", nargs="*", help="Atlas layer IDs, top first (default: catalogue default)")
+    s.add_argument("--atlas", type=Path, default=Path("atlas"), help="Local atlas directory")
+    s.add_argument("--output", type=Path, required=True, help="Destination .rgis project")
     s = sub.add_parser("prepare-website")
     s.add_argument("--dist", default="atlas")
     return p
@@ -102,6 +106,21 @@ def main(argv=None):
     p = parser()
     a = p.parse_args(argv)
     try:
+        if a.command == "rustgis":
+            from energyclimates.analysis.rustgis import open_rustgis_atlas
+
+            if a.output.suffix.lower() != ".rgis":
+                raise ValueError("--output must end in .rgis")
+            session = open_rustgis_atlas(a.atlas, *a.layers)
+            import rustgis
+
+            a.output.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                session.save(a.output)
+            except rustgis.RustGISError as exc:
+                raise ValueError(f"Could not save {a.output}: {exc}") from exc
+            print(f"Saved {', '.join(session.layer_names())} to {a.output}")
+            return
         if a.command == "prepare-website":
             prepare_website(a.dist)
             return

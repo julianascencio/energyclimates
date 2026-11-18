@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: '22'
       - run: python -m pip install -e '.[dev]'
+      - if: matrix.python == '3.12'
+        run: python -m pip install -e '.[rustgis]'
       - run: python -m pytest
       - run: node tests/test_map_math.cjs
       - run: node --check atlas/app.js

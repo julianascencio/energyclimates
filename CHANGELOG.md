@@ -1,5 +1,10 @@
 # Changes
 
+## RustGIS atlas projects
+
+- Export selected atlas layers to portable RustGIS projects from Python or the CLI.
+- Add an offline Chilean solar-resource example using the native RustGIS engine.
+
 ## Global storm maps
 
 - Replace the U.S.-only thunderstorm gallery figure with global WGLC lightning activity; retain the NOAA report API.

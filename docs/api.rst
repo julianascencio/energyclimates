@@ -35,6 +35,9 @@ Mapping
 .. automodule:: energyclimates.analysis.maps
    :members:
 
+.. automodule:: energyclimates.analysis.rustgis
+   :members:
+
 Environmental inputs, methods and analysis
 ------------------------------------------
 

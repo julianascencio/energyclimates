@@ -1,4 +1,6 @@
 """Sphinx/PyData documentation; gallery examples run without provider requests."""
+from importlib.util import find_spec
+
 from energyclimates import __version__
 
 project = "EnergyClimates"
@@ -31,7 +33,8 @@ html_theme_options = {
 sphinx_gallery_conf = {
     "run_stale_examples": True,  # Recompute when imported methods or input snapshots change.
     "examples_dirs": "../examples/gallery", "gallery_dirs": "auto_examples",
-    "filename_pattern": r"/plot_", "download_all_examples": False,
+    "filename_pattern": r"/plot_" if find_spec("rustgis") else r"/plot_(?!19_rustgis_atlas)",
+    "download_all_examples": False,
     "abort_on_example_error": True, "remove_config_comments": True,
     "within_subsection_order": "FileNameSortKey", "reference_url": {},
     "capture_repr": (),

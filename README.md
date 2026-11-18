@@ -176,6 +176,20 @@ The [environmental map gallery](https://julianascencio.github.io/energyclimates/
 adds public-data inputs, reusable screening methods and auditable analysis exports.
 Each study documents its source period, units, coverage and limitations.
 
+## RustGIS atlas projects
+
+From a checkout on Python 3.12+, export selected atlas layers as an editable,
+offline RustGIS project. The file includes the native rasters, source periods,
+units and class labels.
+
+```bash
+python -m pip install -e '.[rustgis]'
+energyclimates rustgis ghi-1996-2022 energy-pv --output results/solar.rgis
+```
+
+See the [atlas guide](docs/atlas.md#open-the-atlas-in-rustgis) for the Python API
+and the [runnable Chile example](examples/gallery/plot_19_rustgis_atlas.py).
+
 ## Documentation and atlas
 
 ```bash

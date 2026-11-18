@@ -45,7 +45,12 @@ energyclimates rustgis ghi-1996-2022 energy-pv --atlas atlas --output results/so
 Open `results/solar.rgis` in RustGIS. The project embeds the source GeoTIFFs, so
 you can move it or open it offline. The **Atlas layers** table records the source,
 period, units, warnings and SHA-256 checksum for each layer. **Class codes**
-maps the numeric categories to the atlas labels. Colours use RustGIS symbology.
+maps the numeric categories to the atlas labels. The layer table also records the
+native grid origin, cell size and dimensions. The ten original KGPV rasters have
+a half-cell offset. RustGIS 0.7 displays a world-clipped extent for them, while
+Identify samples their original grid. Use the grid metadata for pixel indexing.
+
+Colours use RustGIS symbology.
 Continuous layers use the atlas display limits. Identify reads the underlying
 cell even when its value lies outside those display limits.
 

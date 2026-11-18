@@ -68,6 +68,11 @@ def open_rustgis_atlas(atlas: str | Path, *layer_ids: str) -> rustgis.Session:
         "warning",
         "license",
         "source_commit",
+        "west",
+        "north",
+        "resolution",
+        "width",
+        "height",
     )
     # RustGIS inserts each new layer on top. Load bottom first to keep the requested order.
     for key in reversed(selected):

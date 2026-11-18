@@ -78,3 +78,17 @@ def test_default_and_invalid_ids():
         open_rustgis_atlas(ATLAS, "missing")
     with pytest.raises(ValueError, match="only once"):
         open_rustgis_atlas(ATLAS, "energy-pv", "energy-pv")
+
+
+def test_identify_uses_original_half_cell_offset():
+    pytest.importorskip("rustgis")
+    key = "original-Tamb_avg"
+    session = open_rustgis_atlas(ATLAS, key)
+    # This point falls in a different row on a world-aligned 0.5° grid.
+    lon, lat = -99.99, 45.01
+    with rasterio.open(ATLAS / "data" / f"{key}.tif") as src:
+        row, col = src.index(lon, lat)
+        value = next(src.sample([(lon, lat)]))[0]
+    hit = session.run("identify", lon=lon, lat=lat)["attributes"]
+    assert hit["Pixel"] == f"{col}, {row}"
+    assert float(hit["Band 1"]) == pytest.approx(value, abs=0.005)
